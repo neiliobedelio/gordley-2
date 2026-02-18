@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gordley Group Clone</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="navbar nav-dark" id="navbar">
+        <div class="logo">
+            <!-- Placeholder for Logo -->
+            <div class="logo-placeholder">The Gordley Group</div>
+        </div>
+        <div class="desktop-menu">
+            <a href="projects.html">Work</a>
+            <a href="#capabilities">Capabilities</a>
+            <a href="about.html">About/Culture</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <nav>
+            <ul>
+                <li><a href="projects.html">Work</a></li>
+                <li><a href="#capabilities">Capabilities</a></li>
+                <li><a href="about.html">About/Culture</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <!-- Video Hero (Uncomment to use video) -->
+        <!-- <video autoplay muted loop playsinline class="video-background">
+            <source src="assets/your-video-file.mp4" type="video/mp4">
+        </video> -->
+
+        <!-- Image Hero (Comment out to use video) -->
+        <img src="assets/kirstenmarie-tjFQ_G_zQpU-unsplash.jpg" alt="Hero Background" class="video-background">
+        <div class="hero-overlay">
+            <img src="assets/big-logo.svg" alt="The Gordley Group" class="hero-logo" data-aos="fade-up">
+            <button class="cta-button" id="watch-reel-btn" data-aos="fade-up" data-aos-delay="200">Watch our
+                reel</button>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="video-modal">
+        <button class="close-modal" id="close-modal">&times;</button>
+        <div class="modal-content">
+            <div class="video-placeholder-box">Video Placeholder</div>
+        </div>
+    </div>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="container">
+            <h2 data-aos="fade-up">
+                We are a creative agency that helps brands <span class="highlight">stand out</span> in a crowded world.
+                <div class="swoosh-placeholder"></div>
+            </h2>
+        </div>
+    </section>
+
+    <!-- Capabilities Section -->
+    <section id="capabilities" class="capabilities-section">
+        <div class="container">
+            <h3 data-aos="fade-up">Capabilities</h3>
+            <div class="capabilities-grid">
+                <!-- Strategy - Red -->
+                <div class="capability-card">
+                    <div class="cap-header cap-red">
+                        <img src="assets/capabilities/strategy.jpg" alt="" class="cap-bg-image">
+                        <span class="cap-tag">CAPABILITY</span>
+                        <h4>Strategy</h4>
+                    </div>
+                    <div class="cap-body">
+                        <p>Brand Positioning, Research, Insights</p>
+                    </div>
+                    <div class="cap-footer">
+                        <span>LEARN MORE</span>
+                    </div>
+                </div>
+
+                <!-- Creative - Red -->
+                <div class="capability-card">
+                    <div class="cap-header cap-red">
+                        <img src="assets/capabilities/creative.png" alt="" class="cap-bg-image">
+                        <span class="cap-tag">CAPABILITY</span>
+                        <h4>Creative</h4>
+                    </div>
+                    <div class="cap-body">
+                        <p>Campaigns, Design, Copywriting</p>
+                    </div>
+                    <div class="cap-footer">
+                        <span>LEARN MORE</span>
+                    </div>
+                </div>
+
+                <!-- Production - Red -->
+                <div class="capability-card">
+                    <div class="cap-header cap-red">
+                        <img src="assets/capabilities/production.jpg" alt="" class="cap-bg-image">
+                        <span class="cap-tag">CAPABILITY</span>
+                        <h4>Production</h4>
+                    </div>
+                    <div class="cap-body">
+                        <p>Video, Digital, Print</p>
+                    </div>
+                    <div class="cap-footer">
+                        <span>LEARN MORE</span>
+                    </div>
+                </div>
+
+                <!-- Media - Dark (Example Variation) -->
+                <div class="capability-card">
+                    <div class="cap-header cap-dark">
+                        <img src="assets/capabilities/media.png" alt="" class="cap-bg-image">
+                        <span class="cap-tag">CAPABILITY</span>
+                        <h4>Media</h4>
+                    </div>
+                    <div class="cap-body">
+                        <p>Planning, Buying, Analytics</p>
+                    </div>
+                    <div class="cap-footer">
+                        <span>LEARN MORE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Process Section -->
+    <section id="process" class="process-section">
+        <div class="container">
+            <h3 data-aos="fade-up">Our Process</h3>
+
+            <div class="process-container" data-aos="fade-up">
+                <!-- Process Tabs -->
+                <div class="process-tabs">
+                    <button class="process-tab active" data-target="process-1">Discovery</button>
+                    <button class="process-tab" data-target="process-2">Strategy</button>
+                    <button class="process-tab" data-target="process-3">Creative</button>
+                    <button class="process-tab" data-target="process-4">Launch</button>
+                </div>
+
+                <!-- Process Content -->
+                <div class="process-content">
+                    <!-- Step 1: Discovery -->
+                    <div class="process-slide active" id="process-1">
+                        <div class="process-image">
+                            <div class="process-img-placeholder"></div>
+                            <!-- <img src="assets/process/discovery.jpg" alt="Discovery Phase"> -->
+                        </div>
+                        <div class="process-text">
+                            <h4>Discovery</h4>
+                            <p>We start by listening. We dive deep into your brand, your audience, and your goals to
+                                uncover the insights that will drive our work.</p>
+                            <a href="#contact" class="process-cta">Start Discovery</a>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Strategy -->
+                    <div class="process-slide" id="process-2">
+                        <div class="process-image">
+                            <div class="process-img-placeholder" style="background-color: #777;"></div>
+                            <!-- <img src="assets/process/strategy.jpg" alt="Strategy Phase"> -->
+                        </div>
+                        <div class="process-text">
+                            <h4>Strategy</h4>
+                            <p>We build a roadmap for success. From brand positioning to campaign planning, we define
+                                the path forward with clarity and purpose.</p>
+                            <a href="#contact" class="process-cta">Build Strategy</a>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Creative -->
+                    <div class="process-slide" id="process-3">
+                        <div class="process-image">
+                            <div class="process-img-placeholder" style="background-color: #999;"></div>
+                            <!-- <img src="assets/process/creative.jpg" alt="Creative Phase"> -->
+                        </div>
+                        <div class="process-text">
+                            <h4>Creative</h4>
+                            <p>We bring ideas to life. Our design and copy teams craft compelling narratives and visuals
+                                that resonate with your audience.</p>
+                            <a href="#contact" class="process-cta">See Creative</a>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Launch -->
+                    <div class="process-slide" id="process-4">
+                        <div class="process-image">
+                            <div class="process-img-placeholder" style="background-color: #bbb;"></div>
+                            <!-- <img src="assets/process/launch.jpg" alt="Launch Phase"> -->
+                        </div>
+                        <div class="process-text">
+                            <h4>Launch</h4>
+                            <p>We deliver results. whether it's a new website, a video campaign, or a rebrand, we
+                                execute with precision and measure success.</p>
+                            <a href="#contact" class="process-cta">Launch Project</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="work-section">
+        <div class="container">
+            <h3 data-aos="fade-up">Selected Work</h3>
+            <div class="work-grid">
+                <!-- Javascript will populate this or we hardcode some placeholders -->
+                <div class="work-item" data-aos="fade-up"
+                    onclick="window.location.href='case-studies/manny-pacquiao-foundation/index.html'">
+                    <div class="work-thumb-placeholder"></div>
+                    <div class="work-overlay">
+                        <h4>Oro Valley Destination</h4>
+                    </div>
+                </div>
+                <div class="work-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="work-thumb-placeholder"></div>
+                    <div class="work-overlay">
+                        <h4>Project Two</h4>
+                    </div>
+                </div>
+                <div class="work-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="work-thumb-placeholder"></div>
+                    <div class="work-overlay">
+                        <h4>Project Three</h4>
+                    </div>
+                </div>
+                <div class="work-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="work-thumb-placeholder"></div>
+                    <div class="work-overlay">
+                        <h4>Project Four</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h3 data-aos="fade-up">Culture</h3>
+            <div class="about-content">
+                <div class="about-text" data-aos="fade-right">
+                    <p>We believe in hard work, having fun, and creating work that matters.</p>
+                </div>
+                <div class="about-images" data-aos="fade-left">
+                    <div class="image-placeholder"></div>
+                    <div class="image-placeholder"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <site-footer></site-footer>
+
+    <script src="js/footer-component.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

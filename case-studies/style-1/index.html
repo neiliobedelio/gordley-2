@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oro Valley Destination - The Gordley Group</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="navbar" id="navbar">
+        <a href="../../index.html" class="logo">
+            <div class="logo-placeholder">The Gordley Group</div>
+        </a>
+        <div class="desktop-menu">
+            <a href="../../projects.html">Work</a>
+            <a href="../../index.html#capabilities">Capabilities</a>
+            <a href="../../index.html#about">About/Culture</a>
+            <a href="../../index.html#contact">Contact</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <nav>
+            <ul>
+                <li><a href="../../projects.html">Work</a></li>
+                <li><a href="../../index.html#capabilities">Capabilities</a></li>
+                <li><a href="../../index.html#about">About/Culture</a></li>
+                <li><a href="../../index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Case Study Hero -->
+    <section class="case-study-hero">
+        <div class="hero-video-container">
+            <video id="hero-video" autoplay muted loop playsinline
+                poster="../../assets/078_PublicServiceBrand_GordleyGroup_OV_03.webp"></video>
+        </div>
+        <div class="hero-overlay-gradient"></div>
+        <div class="container" style="position: relative; z-index: 2;">
+            <div class="hero-content">
+                <h1 data-aos="fade-up">OV’s General Plan Update - Oro Valley’s Path Forward Branding</h1>
+                <div class="project-meta" data-aos="fade-up" data-aos-delay="100">
+                    <div class="meta-item">
+                        <h3>The PROJECT</h3>
+                        <p>Engage Oro Valley’s devoted fans and inspire them to join his fight outside of the ring.
+                        </p>
+                    </div>
+                    <div class="meta-item">
+                        <h3>The Services</h3>
+                        <ul>
+                            <li>Brand Development</li>
+                            <li>Art Direction/Design</li>
+                            <li>Copywriting</li>
+                            <li>Web Design and Development</li>
+                            <li>Digital and Social Strategy</li>
+                            <li>Social Content</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        var video = document.getElementById('hero-video');
+        var videoSrc = 'https://video.squarespace-cdn.com/content/v1/564e503de4b0ae7e58935536/266d918d-f545-460c-b2dd-b6f1102c2412/playlist.m3u8';
+        if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play();
+            });
+        }
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = videoSrc;
+            video.addEventListener('loadedmetadata', function () {
+                video.play();
+            });
+        }
+    </script>
+
+    <!-- Content Section: The Story -->
+    <section class="case-study-section">
+        <div class="container">
+            <div class="content-block" data-aos="fade-up">
+                <h2>The Story</h2>
+                <p>To kick off the Town of Oro Valley (OV) General Plan Update, the Town tasked Gordley Group with
+                    creating a brand that represented the Town's values and overall purpose and invited the OV community
+                    to engage and participate in the initiative. To begin, we worked with the Town's diverse advisory
+                    group to learn more about the Town. Through surveys and workshops, we discovered the plan's branding
+                    needed to invite collaboration and community, communicate accountability and celebrate residents’
+                    love of their beautiful natural environment.</p>
+                <p>With this insight, we developed the initiative's name, "Oro Valley's Path Forward," and the tagline,
+                    "Planning Together for Our Future."</p>
+            </div>
+            <img src="../../assets/078_PublicServiceBrand_GordleyGroup_OV_01.webp" alt="Oro Valley Brand Story"
+                class="content-image" data-aos="fade-up">
+
+            <div class="content-block" data-aos="fade-up">
+                <h2>Expanding The Brand</h2>
+                <p>Expanding the brand beyond a name, tagline and logo, we developed an illustrative and artistic visual
+                    aesthetic that represents the nature and creative culture in Oro Valley. We combined illustration
+                    and local imagery to create an authentic Oro Valley brand.</p>
+            </div>
+            <img src="../../assets/078_PublicServiceBrand_GordleyGroup_OV_02.webp" alt="Oro Valley Brand Visuals"
+                class="content-image" data-aos="fade-up">
+        </div>
+    </section>
+
+    <!-- Content Section: The Strategies -->
+    <section class="case-study-section bg-light">
+        <div class="container">
+            <h2 data-aos="fade-up">The Strategies</h2>
+            <div class="strategies-container">
+                <div class="strategy-row" data-aos="fade-up">
+                    <div class="strategy-label">ELEVATE</div>
+                    <div class="strategy-content">the Oro Valley Foundation and its reach by sharing the breadth of the
+                        foundation’s work and ways to support it.</div>
+                </div>
+                <div class="strategy-row" data-aos="fade-up">
+                    <div class="strategy-label">INSPIRE</div>
+                    <div class="strategy-content">others to make a tangible difference in the world alongside Manny and
+                        his foundation.</div>
+                </div>
+                <div class="strategy-row" data-aos="fade-up">
+                    <div class="strategy-label">GENERATE</div>
+                    <div class="strategy-content">buzz around the foundation by leveraging Oro Valley, boxing, and
+                        giveaways.</div>
+                </div>
+                <div class="strategy-row" data-aos="fade-up">
+                    <div class="strategy-label">ENGAGE</div>
+                    <div class="strategy-content">with Oro Valley’s devoted fans, and inspire them to join his fight
+                        outside of the ring.</div>
+                </div>
+                <div class="strategy-row" data-aos="fade-up">
+                    <div class="strategy-label">CELEBRATE</div>
+                    <div class="strategy-content">donors and emphasize the foundation’s appreciation for their support.
+                    </div>
+                </div>
+                <div class="strategy-row" data-aos="fade-up">
+                    <div class="strategy-label">LEVERAGE</div>
+                    <div class="strategy-content">the large Filipino audience by engaging with them in Tagalog.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Grid -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item" data-aos="zoom-in">
+                    <div class="stat-number">234%</div>
+                    <div class="stat-desc">Increase in engagement rate on Facebook</div>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="stat-number">18%</div>
+                    <div class="stat-desc">Increase in engagement rate on Instagram</div>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="stat-number">37%</div>
+                    <div class="stat-desc">Increase in engagement rate on Twitter</div>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="stat-number">16%</div>
+                    <div class="stat-desc">Increase in followers on Instagram</div>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="stat-number">13%</div>
+                    <div class="stat-desc">Increase in followers on Facebook</div>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="stat-number">446k</div>
+                    <div class="stat-desc">Average generated impressions on Twitter per month</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campaign Section -->
+    <section class="case-study-section">
+        <div class="container">
+            <div class="content-block" data-aos="fade-up">
+                <h2 data-aos="fade-up">August Donation Campaign</h2>
+                <div class="content-block" data-aos="fade-up">
+                    <p>IN AUGUST 2021, we ran a social media donation campaign with these objectives:</p>
+                    <ul class="highlighted-list">
+                        <li>Highlighting the foundation’s new partnership with CAMELEON</li>
+                        <li>Driving donations for the CAMELEON and MPF initiatives</li>
+                    </ul>
+                    <p>We pushed social posts informing audiences about CAMELEON and the initiatives that the
+                        partnership
+                        would be supporting, driving donations for those initiatives.</p>
+                    <p>We also held a month-long social media giveaway asking followers to tag their friends and make a
+                        donation to the foundation as a bonus entry. Giveaway prizes included Facetime calls with Oro
+                        Valley
+                        himself, signed Pacquiao posters, and signed boxing gloves.</p>
+                </div>
+
+                <div class="metric-highlight" data-aos="fade-up">
+                    <h3>121.5K total impressions</h3>
+                    <p>Between two posts promoting the giveaway, across platforms (Twitter, Facebook and Instagram)</p>
+                </div>
+            </div>
+
+
+
+            <div class="content-block" data-aos="fade-up">
+                <p>LIKELY THE MOST EXCITING ASPECT of the donation campaign was Oro Valley’s televised fight against
+                    Yordenis Ugas. With a majority of the foundation’s social following being die-hard Pacquiao fans,
+                    this was a huge opportunity to create excitement around not only Pacquiao’s fight in the ring, but
+                    also his fight for communities around the world.</p>
+                <p>Between August 18th and 22nd, we spread the news that Oro Valley had secured an anonymous donor
+                    that would be matching ALL donations (up to 25K) made between those days.</p>
+                <p>Donations AND the number of donors MORE THAN DOUBLED THE MONTHLY AVERAGE compared to the seven months
+                    before.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-item" data-aos="zoom-in">
+                    <div class="stat-number">11%</div>
+                    <div class="stat-desc">increase in followers<br>At the end of the campaign on Instagram and Facebook
+                    </div>
+                </div>
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="stat-number">1.1M+</div>
+                    <div class="stat-desc">impressions and 24.5K engagements<br>across all platforms</div>
+                </div>
+            </div>
+
+            <div class="testimonial-container" data-aos="fade-up">
+                <span>“Based on our experience working with Gordley Group, we wholeheartedly recommend their services
+                    to any organization or individual seeking a reliable and proficient partner. Their commitment to
+                    excellence, timely delivery of services, and professionalism make them an invaluable asset for any
+                    project or initiative.”</span>
+                <p class="author-name">—Jon Sisson</p>
+                <p class="author-title">Executive Director, Oro Valley Destination</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <site-footer></site-footer>
+
+    <script src="../../js/footer-component.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.4.12/hls.min.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+
+</html>

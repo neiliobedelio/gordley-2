@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | The Gordley Group Clone</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="navbar nav-dark" id="navbar">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <div class="logo-placeholder">The Gordley Group</div>
+            </a>
+        </div>
+        <div class="desktop-menu">
+            <a href="projects.html">Work</a>
+            <a href="index.html#capabilities">Capabilities</a>
+            <a href="about.html" class="active">About/Culture</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <nav>
+            <ul>
+                <li><a href="projects.html">Work</a></li>
+                <li><a href="index.html#capabilities">Capabilities</a></li>
+                <li><a href="about.html">About/Culture</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <canvas id="hero-canvas"></canvas>
+        <div class="container hero-content">
+            <h1 data-aos="fade-up">Digital Products.<br>Human Experiences.</h1>
+            <p data-aos="fade-up" data-aos-delay="200">Human experiences are the foundation of everything we do – client
+                relationships, team collaboration and an unwavering focus on the end user. This philosophy is in our
+                name, our core values and underpins our approach to every engagement.</p>
+        </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="about-intro">
+        <div class="container">
+            <h2 data-aos="fade-up">Since 2010 we’ve been working with amazing clients to create meaningful impact and
+                compelling experiences.</h2>
+            <!-- Just a representative list of clients from the source text -->
+            <div class="client-list-text" data-aos="fade-up" data-aos-delay="100">
+                Techcrunch • Satterley • PayTo • TrailsWA • Cancer Council WA • Sussex • Hospital Research Foundation
+                Group • Agrifutures • Argyle Diamonds • Curtin University • Deloitte • Fremantle Arts Centre • Macquarie
+                University • Rychiger • Pentanet • Seven-West Media • National Breast Cancer Foundation • Bonfire •
+                Cocos Keeling Islands • Children's Hospital Foundation
+            </div>
+        </div>
+    </section>
+
+    <!-- Capabilities Section -->
+    <section class="about-capabilities">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h3>Our capabilities are centred around our ability to deliver world-class websites and apps.</h3>
+                <p>We’re 100% in-house and work end-to-end, ensuring each project is delivered to the highest standard.
+                </p>
+            </div>
+
+            <div class="services-grid">
+                <!-- Strategy & UX -->
+                <div class="service-col" data-aos="fade-up">
+                    <h4>Strategy & UX</h4>
+                    <ul>
+                        <li>Digital Strategy</li>
+                        <li>User Research</li>
+                        <li>User Journey Mapping</li>
+                        <li>Information Architecture</li>
+                        <li>Wireframing</li>
+                    </ul>
+                </div>
+
+                <!-- Design -->
+                <div class="service-col" data-aos="fade-up" data-aos-delay="100">
+                    <h4>Design</h4>
+                    <ul>
+                        <li>Interaction Design</li>
+                        <li>User Interface Design</li>
+                        <li>Design Systems</li>
+                        <li>Prototyping & Animation</li>
+                        <li>Accessibility</li>
+                    </ul>
+                </div>
+
+                <!-- Development -->
+                <div class="service-col" data-aos="fade-up" data-aos-delay="200">
+                    <h4>Development</h4>
+                    <ul>
+                        <li>Websites</li>
+                        <li>eCommerce</li>
+                        <li>Web Applications</li>
+                        <li>Mobile Apps (iOS & Android)</li>
+                        <li>Platform Integrations</li>
+                    </ul>
+                </div>
+
+                <!-- Technology -->
+                <div class="service-col" data-aos="fade-up">
+                    <h4>Technology</h4>
+                    <ul>
+                        <li>Vue & React.js</li>
+                        <li>Headless Content Management</li>
+                        <li>WordPress & WooCommerce</li>
+                        <li>Laravel</li>
+                        <li>Shopify</li>
+                    </ul>
+                </div>
+
+                <!-- Optimisation -->
+                <div class="service-col" data-aos="fade-up" data-aos-delay="100">
+                    <h4>Optimisation</h4>
+                    <ul>
+                        <li>Website / App Review</li>
+                        <li>Performance Optimisation</li>
+                        <li>Conversion Optimisation</li>
+                        <li>A/B Testing</li>
+                        <li>Ongoing Enhancements</li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div class="service-col" data-aos="fade-up" data-aos-delay="200">
+                    <h4>Support</h4>
+                    <ul>
+                        <li>Project Management</li>
+                        <li>Website Hosting</li>
+                        <li>Website Maintenance</li>
+                        <li>Performance & Security</li>
+                        <li>3rd Party Integrations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="about-team">
+        <div class="container">
+            <h2 data-aos="fade-up">Meet the team</h2>
+            <div class="team-grid">
+                <!-- Placeholder Team Members -->
+                <div class="team-member" data-aos="fade-up">
+                    <div class="member-image-wrapper">
+                        <img src="assets/691b9be280a7bf422c59ddee_dennis_boyle_1.jpg" alt="Dennis Boyle"
+                            class="mem-img-main">
+                        <img src="assets/691b9be5e5271bbeec007485_dennis_boyle_2.jpg" alt="Dennis Boyle Hover"
+                            class="mem-img-hover">
+                        <div class="bio-overlay">
+                            <p>Dennis is a visionary leader with over 20 years of experience in digital strategy and
+                                brand development.</p>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h4>Dennis Boyle</h4>
+                        <p>Principal</p>
+                    </div>
+                </div>
+                <div class="team-member" data-aos="fade-up" data-aos-delay="100">
+                    <div class="member-image-placeholder">
+                        <div class="bio-overlay">
+                            <p>Sarah brings a unique creative flair to every project, ensuring our designs are both
+                                beautiful and functional.</p>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h4>Sarah</h4>
+                        <p>Creative Director</p>
+                    </div>
+                </div>
+                <div class="team-member" data-aos="fade-up" data-aos-delay="200">
+                    <div class="member-image-placeholder">
+                        <div class="bio-overlay">
+                            <p>Mike is a strategic thinker who loves data and insights.</p>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h4>Mike</h4>
+                        <p>Strategy Lead</p>
+                    </div>
+                </div>
+                <div class="team-member" data-aos="fade-up">
+                    <div class="member-image-placeholder"></div>
+                    <div class="member-info">
+                        <h4>Jessica</h4>
+                        <p>UX Design</p>
+                    </div>
+                </div>
+                <div class="team-member" data-aos="fade-up" data-aos-delay="100">
+                    <div class="member-image-placeholder"></div>
+                    <div class="member-info">
+                        <h4>David</h4>
+                        <p>Front-end Developer</p>
+                    </div>
+                </div>
+                <div class="team-member" data-aos="fade-up" data-aos-delay="200">
+                    <div class="member-image-placeholder"></div>
+                    <div class="member-info">
+                        <h4>Emily</h4>
+                        <p>Project Manager</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Culture/Values Section -->
+    <section class="about-culture">
+        <div class="container">
+            <h2 data-aos="fade-up">Above all, we believe in human relationships, exceptional outcomes, and having fun
+                along the way.</h2>
+
+            <div class="dos-donts-grid">
+                <div class="dos-col" data-aos="fade-right">
+                    <h3>What we do</h3>
+                    <ul>
+                        <li>World-class digital</li>
+                        <li>Expect creativity</li>
+                        <li>Celebrate success</li>
+                        <li>Obsess over detail</li>
+                        <li>Pub lunch Fridays</li>
+                        <li>Embrace change</li>
+                        <li>Unlock potential</li>
+                        <li>High-five</li>
+                        <li>Outstanding service</li>
+                        <li>Value relationships</li>
+                        <li>Exceed expectations</li>
+                        <li>Party</li>
+                    </ul>
+                </div>
+
+                <div class="donts-col" data-aos="fade-left">
+                    <h3>What we don't</h3>
+                    <ul>
+                        <li>Work weekends</li>
+                        <li>Outsource</li>
+                        <li>Resist cake</li>
+                        <li>Lose at Mario Kart</li>
+                        <li>‘Make it pop’</li>
+                        <li>Free pitches</li>
+                        <li>Sacrifice quality for profit</li>
+                        <li>Egos</li>
+                        <li>Overpromise</li>
+                        <li>Cut corners</li>
+                        <li>Accept mediocrity</li>
+                        <li>Decaf</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="culture-cta" data-aos="fade-up">
+                <a href="index.html#contact" class="big-link">Let’s make something epic fun delightful beautiful
+                    original extraordinary engaging click wonderful</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <site-footer></site-footer>
+
+    <script src="js/footer-component.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/particle-hero.js"></script>
+</body>
+
+</html>

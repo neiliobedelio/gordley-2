@@ -4,8 +4,8 @@ class StaffEmbroidery {
         this.ctx = this.canvas.getContext('2d');
         this.imagePaths = options.imagePaths || [];
         this.currentIndex = 0;
-        this.hexSize = options.hexSize || 4; // Radius of hexagon
-        this.speed = options.speed || 10; // Hexes per frame
+        this.hexSize = options.hexSize || 6; // Radius of hexagon - Larger for performance & coverage
+        this.speed = options.speed || 50; // Beads per frame - Faster for larger beads/area
 
         this.isAnimating = false;
         this.width = 0;
@@ -15,6 +15,40 @@ class StaffEmbroidery {
         this.activeHexes = []; // Hexes to animate
         this.visited = new Set();
         this.frontier = []; // Queue for growth
+
+        // Earth Tone Bead Palette (Natural Colors)
+        this.palette = [
+            // Grayscale / Neutrals
+            { r: 20, g: 20, b: 20 },     // Black
+            { r: 240, g: 240, b: 235 },  // Off-White / Cream
+            { r: 169, g: 169, b: 169 },  // Dark Grey
+            { r: 210, g: 180, b: 140 },  // Tan
+
+            // Browns
+            { r: 139, g: 69, b: 19 },    // Saddle Brown
+            { r: 160, g: 82, b: 45 },    // Sienna
+            { r: 101, g: 67, b: 33 },    // Dark Brown
+            { r: 205, g: 133, b: 63 },   // Peru
+            { r: 244, g: 164, b: 96 },   // Sandy Brown
+
+            // Greens (Natural/Olive)
+            { r: 85, g: 107, b: 47 },    // Dark Olive Green
+            { r: 128, g: 128, b: 0 },    // Olive
+            { r: 34, g: 139, b: 34 },    // Forest Green
+            { r: 107, g: 142, b: 35 },   // Olive Drab
+
+            // Muted Reds/Oranges/Yellows (Rust/Terracotta)
+            { r: 178, g: 34, b: 34 },    // Firebrick (Muted Red)
+            { r: 139, g: 0, b: 0 },      // Dark Red
+            { r: 218, g: 165, b: 32 },   // Goldenrod
+            { r: 184, g: 134, b: 11 },   // Dark Goldenrod
+            { r: 210, g: 105, b: 30 },   // Chocolate
+
+            // Blues (Muted/Slate)
+            { r: 47, g: 79, b: 79 },     // Dark Slate Gray
+            { r: 70, g: 130, b: 180 },   // Steel Blue
+            { r: 25, g: 25, b: 112 }     // Midnight Blue
+        ];
 
         this.init();
     }
@@ -35,12 +69,8 @@ class StaffEmbroidery {
     async loadNextImage() {
         if (this.imagePaths.length === 0) return;
 
-        // Fade out old image if exists
-        if (this.currentIndex > 0 || this.hexGrid.size > 0) {
-            this.ctx.fillStyle = 'rgba(17, 17, 17, 0.9)'; // Dark fade
-            this.ctx.fillRect(0, 0, this.width, this.height);
-            await new Promise(r => setTimeout(r, 500));
-        }
+        // Removed fade out to allow seamless "growth" over previous image
+        // if (this.currentIndex > 0 || this.hexGrid.size > 0) { ... }
 
         const src = this.imagePaths[this.currentIndex];
         this.currentIndex = (this.currentIndex + 1) % this.imagePaths.length;
@@ -75,11 +105,30 @@ class StaffEmbroidery {
         document.body.appendChild(div);
     }
 
+    findNearestColor(r, g, b) {
+        let minDist = Infinity;
+        let bestColor = this.palette[0];
+
+        for (const color of this.palette) {
+            // Euclidean distance
+            const dr = r - color.r;
+            const dg = g - color.g;
+            const db = b - color.b;
+            const dist = dr * dr + dg * dg + db * db;
+
+            if (dist < minDist) {
+                minDist = dist;
+                bestColor = color;
+            }
+        }
+        return `rgb(${bestColor.r}, ${bestColor.g}, ${bestColor.b})`;
+    }
+
     processImage(img) {
         // Create offscreen canvas to sample data
         const offCanvas = document.createElement('canvas');
-        // Fit image into screen maintain aspect ratio
-        const scale = Math.min(this.width / img.width, this.height / img.height) * 0.8; // 80% screen size
+        // Fit image into screen maintain aspect ratio (COVER)
+        const scale = Math.max(this.width / img.width, this.height / img.height);
         const w = img.width * scale;
         const h = img.height * scale;
 
@@ -101,8 +150,7 @@ class StaffEmbroidery {
         this.frontier = [];
 
         // Hex Layout: Pointy topped
-        // width = sqrt(3) * size
-        // height = 2 * size
+        // Tight packing for circles
         const hexW = Math.sqrt(3) * this.hexSize;
         const hexH = 2 * this.hexSize;
         const vertDist = hexH * 0.75;
@@ -126,7 +174,9 @@ class StaffEmbroidery {
 
                     // Only keep non-transparent pixels
                     if (alpha > 20) {
-                        const color = `rgb(${data[idx]}, ${data[idx + 1]}, ${data[idx + 2]})`;
+                        // Quantize color
+                        const color = this.findNearestColor(data[idx], data[idx + 1], data[idx + 2]);
+
                         const key = `${q},${r}`;
                         const hex = { q, r, x, y, color };
                         this.hexGrid.set(key, hex);
@@ -161,10 +211,6 @@ class StaffEmbroidery {
     animate() {
         if (!this.isAnimating) return;
 
-        // Process N hexes per frame
-        // Dynamically adjust speed based on remaining work?
-        // Let's stick to fixed speed for now.
-
         let processed = 0;
         while (processed < this.speed && this.frontier.length > 0) {
             // Random pick
@@ -175,7 +221,7 @@ class StaffEmbroidery {
             this.frontier[randIdx] = this.frontier[this.frontier.length - 1];
             this.frontier.pop();
 
-            this.drawHex(hex);
+            this.drawBead(hex);
             this.addNeighbors(hex);
             processed++;
         }
@@ -190,21 +236,37 @@ class StaffEmbroidery {
         requestAnimationFrame(() => this.animate());
     }
 
-    drawHex(hex) {
+    drawBead(hex) {
         const ctx = this.ctx;
-        ctx.strokeStyle = hex.color;
-        ctx.lineWidth = 1.5;
-        ctx.lineCap = 'round';
+        const x = hex.x;
+        const y = hex.y;
+        const r = this.hexSize; // Use full size for gradient calculation
 
-        // Simulate a stitch: messy line
-        // Random angle offset
-        const angle = Math.random() * Math.PI;
-        const len = this.hexSize * 0.8;
-
+        // 1. Draw solid base color first so it comes through clearly
         ctx.beginPath();
-        ctx.moveTo(hex.x - Math.cos(angle) * len, hex.y - Math.sin(angle) * len);
-        ctx.lineTo(hex.x + Math.cos(angle) * len, hex.y + Math.sin(angle) * len);
-        ctx.stroke();
+        // Use 0.9 radius for the actual bead shape to keep slight spacing
+        ctx.arc(x, y, r * 0.9, 0, Math.PI * 2);
+        ctx.fillStyle = hex.color;
+        ctx.fill();
+
+        // 2. Overlay "Lighting" Gradient (Softened)
+        // Light source: Top-Right (matching CodePen style)
+        // Geometry: Offset start circle to (x + 0.3r, y - 0.3r)
+        const grad = ctx.createRadialGradient(
+            x + r * 0.3, y - r * 0.3, r * 0.1,  // Highlight origin
+            x, y, r * 0.9                       // Shadow edge
+        );
+
+        // Gradient Stops for "Between" Look:
+        // 0% - Highlight: Soft White (0.45 opacity - down from 0.8)
+        // 50% - Midtone: Transparent (Let base color show)
+        // 100% - Shadow: Soft Black (0.35 opacity - down from 0.6)
+        grad.addColorStop(0, 'rgba(255, 255, 255, 0.45)');
+        grad.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
+        grad.addColorStop(1, 'rgba(0, 0, 0, 0.35)');
+
+        ctx.fillStyle = grad;
+        ctx.fill();
     }
 
     addNeighbors(hex) {

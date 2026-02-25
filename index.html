@@ -13,45 +13,20 @@
 
 <body>
 
-    <!-- Header -->
-    <header class="navbar nav-dark" id="navbar">
-        <div class="logo">
-            <!-- Placeholder for Logo -->
-            <div class="logo-placeholder">The Gordley Group</div>
-        </div>
-        <div class="desktop-menu">
-            <a href="projects.html">Work</a>
-            <a href="#capabilities">Capabilities</a>
-            <a href="about.html">About/Culture</a>
-            <a href="#contact">Contact</a>
-        </div>
-        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
-    </header>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu" id="mobile-menu">
-        <nav>
-            <ul>
-                <li><a href="projects.html">Work</a></li>
-                <li><a href="#capabilities">Capabilities</a></li>
-                <li><a href="about.html">About/Culture</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
+    <site-header></site-header>
 
     <!-- Hero Section -->
     <section class="hero-section">
         <!-- Video Hero (Uncomment to use video) -->
         <!-- <video autoplay muted loop playsinline class="video-background">
-            <source src="assets/your-video-file.mp4" type="video/mp4">
+            <source src="assets/clipped.mp4" type="video/mp4">
         </video> -->
 
-        <!-- Image Hero (Comment out to use video) -->
-        <img src="assets/kirstenmarie-tjFQ_G_zQpU-unsplash.jpg" alt="Hero Background" class="video-background">
+        <!-- Image Hero (Converted to div for water ripple effect) -->
+        <div class="video-background ripple-hero"
+            style="background-image: url('assets/kirstenmarie-tjFQ_G_zQpU-unsplash.jpg'); background-size: cover; background-position: center; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 0;">
+        </div>
+
         <div class="hero-overlay">
             <img src="assets/big-logo.svg" alt="The Gordley Group" class="hero-logo" data-aos="fade-up">
             <button class="cta-button" id="watch-reel-btn" data-aos="fade-up" data-aos-delay="200">Watch our
@@ -77,11 +52,96 @@
         </div>
     </section>
 
+    <!-- Interactive Showcase Section -->
+    <section class="showcase-section">
+        <div class="content-accordion">
+
+            <!-- Slide 1 -->
+            <div class="accordion-panel active">
+                <img src="assets/kirstenmarie-tjFQ_G_zQpU-unsplash.jpg" alt="Organic Harmony" class="panel-bg">
+                <div class="panel-overlay"></div>
+                <div class="panel-vertical-title">
+                    <span>01</span>
+                    <h2>Organic Harmony</h2>
+                </div>
+                <div class="panel-content">
+                    <div class="slide-meta">
+                        <span class="slide-number">01</span>
+                        <div class="slide-icon"></div>
+                    </div>
+                    <h3>Organic Harmony</h3>
+                    <p>Blending the unpredictability of nature with digital precision.</p>
+                    <button class="panel-cta">View Logic</button>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="accordion-panel">
+                <img src="assets/capabilities/bird.jpg" alt="Kinetic Flow" class="panel-bg">
+                <div class="panel-overlay"></div>
+                <div class="panel-vertical-title">
+                    <span>02</span>
+                    <h2>Kinetic Flow</h2>
+                </div>
+                <div class="panel-content">
+                    <div class="slide-meta">
+                        <span class="slide-number">02</span>
+                        <div class="slide-icon"></div>
+                    </div>
+                    <h3>Kinetic Flow</h3>
+                    <p>Motion creates emotion. We design for zero friction.</p>
+                    <button class="panel-cta">View Logic</button>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="accordion-panel">
+                <img src="assets/capabilities/pexels-gurveer-kaur-3000781-13461490.jpg" alt="Tactile Space"
+                    class="panel-bg">
+                <div class="panel-overlay"></div>
+                <div class="panel-vertical-title">
+                    <span>03</span>
+                    <h2>Tactile Space</h2>
+                </div>
+                <div class="panel-content">
+                    <div class="slide-meta">
+                        <span class="slide-number">03</span>
+                        <div class="slide-icon"></div>
+                    </div>
+                    <h3>Tactile Space</h3>
+                    <p>Building multi-sensory realities without the overload.</p>
+                    <button class="panel-cta">View Logic</button>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="accordion-panel">
+                <img src="assets/capabilities/pexels-chiaroscuro-154214185-10684768.jpg" alt="Enduring Logic"
+                    class="panel-bg">
+                <div class="panel-overlay"></div>
+                <div class="panel-vertical-title">
+                    <span>04</span>
+                    <h2>Enduring Logic</h2>
+                </div>
+                <div class="panel-content">
+                    <div class="slide-meta">
+                        <span class="slide-number">04</span>
+                        <div class="slide-icon"></div>
+                    </div>
+                    <h3>Enduring Logic</h3>
+                    <p>Systems built to scale, adapt, and outlast the trend.</p>
+                    <button class="panel-cta">View Logic</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
     <!-- Capabilities Section -->
     <section id="capabilities" class="capabilities-section">
         <div class="container">
             <h3 data-aos="fade-up">Capabilities</h3>
-            <div class="capabilities-grid">
+            <div class="capabilities-grid" data-aos="fade-up" data-aos-duration="1000" data-aos-offset="200">
                 <!-- Strategy - Red -->
                 <div class="capability-card">
                     <div class="cap-header cap-red">
@@ -228,16 +288,17 @@
             <div class="work-grid">
                 <!-- Javascript will populate this or we hardcode some placeholders -->
                 <div class="work-item" data-aos="fade-up"
-                    onclick="window.location.href='case-studies/manny-pacquiao-foundation/index.html'">
+                    onclick="window.location.href='case-studies/style-1/index.html'">
                     <div class="work-thumb-placeholder"></div>
                     <div class="work-overlay">
                         <h4>Oro Valley Destination</h4>
                     </div>
                 </div>
-                <div class="work-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="work-item" data-aos="fade-up"
+                    onclick="window.location.href='case-studies/pentagram-style/index.html'">
                     <div class="work-thumb-placeholder"></div>
                     <div class="work-overlay">
-                        <h4>Project Two</h4>
+                        <h4>Oro Valley (Pentagram Style)</h4>
                     </div>
                 </div>
                 <div class="work-item" data-aos="fade-up" data-aos-delay="200">
@@ -250,6 +311,74 @@
                     <div class="work-thumb-placeholder"></div>
                     <div class="work-overlay">
                         <h4>Project Four</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <!-- Custom Cursor Element -->
+        <div id="drag-cursor" class="custom-drag-cursor">
+            <svg class="drag-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+        </div>
+
+        <div class="testimonials-slider-container">
+            <div class="testimonials-slider" id="testimonials-slider">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Toujours disponibles pour discuter de nos préoccupations, les équipes ont fait un excellent
+                            travail en nous tenant informés tout au long du projet. Leur expertise dans l'image de
+                            marque a grandement contribué à la réussite de notre projet.</p>
+                        <div class="rating">5<span class="small-text">/5</span> <span class="star">★</span></div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-author">
+                        <img src="assets/691b9be280a7bf422c59ddee_dennis_boyle_1.jpg" alt="Roger Tristan"
+                            class="author-photo">
+                        <div class="author-info">
+                            <h4 class="author-name">Roger<br>Tristan</h4>
+                            <p class="author-title">CEO chez<br>Kirk</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>Ateliers de co-conception, pragmatisme et découpage des étapes de travail qui évite les
+                            surprises. 13G ne travaille pas dans son coin, c'est ce qui nous a permis de valider chaque
+                            livrable de manière fluide. Nous avons trouvé ce que nous étions venus chercher, une agence
+                            de branding et de créatifs qui cassent les codes et délivrent un travail de qualité.</p>
+                        <div class="rating">5<span class="small-text">/5</span> <span class="star">★</span></div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <div class="testimonial-author">
+                        <img src="assets/691b9be5e5271bbeec007485_dennis_boyle_2.jpg" alt="Fabien Almodovar"
+                            class="author-photo">
+                        <div class="author-info">
+                            <h4 class="author-name">Fabien<br>Almodovar</h4>
+                            <p class="author-title">CEO et fondateur<br>ACED</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>Les échanges étaient fluides, les propositions créatives pertinentes, et leur valeur ajoutée
+                            dans leur expertise ainsi que dans la méthodologie de travail efficace.</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial 4 (Extra for scrolling) -->
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Une équipe réactive et à l'écoute. Le résultat correspond parfaitement à nos attentes et la
+                            collaboration s'est déroulée dans les meilleures conditions.</p>
+                        <div class="rating">4.5<span class="small-text">/5</span> <span class="star">★</span></div>
                     </div>
                 </div>
             </div>
@@ -277,6 +406,9 @@
 
     <script src="js/footer-component.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
+    <script src="js/header-component.js"></script>
     <script src="js/main.js"></script>
 </body>
 

@@ -13,36 +13,7 @@
 
 <body>
 
-    <!-- Header -->
-    <header class="navbar" id="navbar">
-        <div class="logo">
-            <a href="index.html" style="text-decoration: none; color: inherit;">
-                <div class="logo-placeholder">The Gordley Group</div>
-            </a>
-        </div>
-        <div class="desktop-menu">
-            <a href="projects.html">Work</a>
-            <a href="index.html#capabilities">Capabilities</a>
-            <a href="index.html#about">About/Culture</a>
-            <a href="index.html#contact">Contact</a>
-        </div>
-        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
-    </header>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu" id="mobile-menu">
-        <nav>
-            <ul>
-                <li><a href="projects.html">Work</a></li>
-                <li><a href="index.html#capabilities">Capabilities</a></li>
-                <li><a href="index.html#about">About/Culture</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
+    <site-header></site-header>
 
     <!-- Projects Grid Section -->
     <section class="projects-section">
@@ -143,6 +114,72 @@
                 </div>
             </a>
         </div>
+
+        <div class="container" style="margin-top: 80px;">
+            <h2 style="margin-bottom: 40px; font-family: var(--font-heading);">More from The Gordley Group</h2>
+            <div class="work-list-grid">
+                <!-- Project 1: Pentagram Version -->
+                <a href="case-studies/pentagram-style/index.html" class="work-list-tile">
+                    <div class="work-tile-img" style="background-image: url('assets/manny-pacquiao/hero.jpg');"></div>
+                    <div class="work-tile-content">
+                        <span class="work-category">UPDATE</span>
+                        <h3>Pentagram Style Layout</h3>
+                        <p class="work-date">January 26, 2026</p>
+                    </div>
+                </a>
+
+                <!-- Project 2: Original Version -->
+                <a href="case-studies/style-1/index.html" class="work-list-tile">
+                    <div class="work-tile-img"
+                        style="background-image: url('assets/078_PublicServiceBrand_GordleyGroup_OV_03.webp');"></div>
+                    <div class="work-tile-content">
+                        <span class="work-category">CASE STUDY</span>
+                        <h3>Oro Valley Destination Branding (Original)</h3>
+                        <p class="work-date">January 22, 2026</p>
+                    </div>
+                </a>
+
+                <!-- Placeholder Project 3 -->
+                <a href="#" class="work-list-tile">
+                    <div class="work-tile-img" style="background-color: #333;"></div>
+                    <div class="work-tile-content">
+                        <span class="work-category">PHOTOS</span>
+                        <h3>The new Gordley Sainte-Catherine opens today in Montreal</h3>
+                        <p class="work-date">January 16, 2026</p>
+                    </div>
+                </a>
+
+                <!-- Placeholder Project 4 -->
+                <a href="#" class="work-list-tile">
+                    <div class="work-tile-img" style="background-color: #444;"></div>
+                    <div class="work-tile-content">
+                        <span class="work-category">UPDATE</span>
+                        <h3>Popular Tech franchise comes to GG Arcade on February 5</h3>
+                        <p class="work-date">January 14, 2026</p>
+                    </div>
+                </a>
+
+                <!-- Placeholder Project 5 -->
+                <a href="#" class="work-list-tile">
+                    <div class="work-tile-img" style="background-color: #555;"></div>
+                    <div class="work-tile-content">
+                        <span class="work-category">PRESS RELEASE</span>
+                        <h3>Introducing Creator Studio, an inspiring collection of creative apps</h3>
+                        <p class="work-date">January 13, 2026</p>
+                    </div>
+                </a>
+
+                <!-- Placeholder Project 6 -->
+                <a href="#" class="work-list-tile">
+                    <div class="work-tile-img" style="background-color: #666;"></div>
+                    <div class="work-tile-content">
+                        <span class="work-category">UPDATE</span>
+                        <h3>2025 marked a record-breaking year for Gordley services</h3>
+                        <p class="work-date">January 12, 2026</p>
+                    </div>
+                </a>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -150,6 +187,7 @@
 
     <script src="js/footer-component.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/header-component.js"></script>
     <script src="js/main.js"></script>
 </body>
 

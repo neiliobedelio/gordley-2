@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capabilities | The Gordley Group</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Scroll Jacking Styles */
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            /* Hide default body scroll */
+        }
+
+        .scroll-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .scroll-section {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        /* Adjust for navbar */
+        .scroll-section.first-section {
+            padding-top: 80px;
+            /* Approximate navbar height */
+        }
+
+        /* Section themes */
+        .theme-dark {
+            background-color: var(--color-black, #1a1a1a);
+            color: var(--color-white, #ffffff);
+        }
+
+        .theme-light {
+            background-color: var(--color-white, #ffffff);
+            color: var(--color-black, #1a1a1a);
+        }
+
+        .theme-accent {
+            background-color: var(--color-blue, #0055ff);
+            color: var(--color-white, #ffffff);
+        }
+
+        /* Parallax Backgrounds */
+        .scroll-section.parallax {
+            color: var(--color-white, #ffffff);
+            /* Background properties moved to .parallax-bg-layer */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .parallax-bg-layer {
+            position: absolute;
+            top: -25%;
+            left: 0;
+            width: 100%;
+            height: 150%;
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        .parallax-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .scroll-section .section-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .scroll-indicator {
+            z-index: 2;
+        }
+
+        .section-content {
+            max-width: 800px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-section.is-visible .section-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .section-text {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            line-height: 1.4;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.7;
+        }
+
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0) translateX(-50%);
+            }
+
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+
+        /* Ensure footer works with scroll container */
+        .footer-section {
+            height: auto;
+            min-height: auto;
+            scroll-snap-align: end;
+        }
+    </style>
+</head>
+
+<body>
+
+    <site-header nav-class="nav-dark"></site-header>
+
+    <!-- Scroll Jacking Container -->
+    <div class="scroll-container" id="scroll-container">
+
+        <!-- Section 1 -->
+        <section class="scroll-section first-section parallax"
+            style="background-image: url('assets/capabilities/GG Office.jpg');">
+            <div class="parallax-overlay"></div>
+            <div class="section-content">
+                <h1 class="section-title">End-to-End Capabilities.</h1>
+                <p class="section-text">Scroll down to explore how we deliver world-class digital experiences from
+                    strategy to support.</p>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <polyline points="19 12 12 19 5 12"></polyline>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="scroll-section parallax" style="background-image: url('assets/capabilities/strategy.jpg');">
+            <div class="parallax-overlay"></div>
+            <div class="section-content">
+                <h2 class="section-title">Strategy & UX</h2>
+                <p class="section-text">We build the foundation for success through deep user research, strategic
+                    planning, and mapped journeys that ensure your digital product solves real problems.</p>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="scroll-section parallax" style="background-image: url('assets/capabilities/creative.png');">
+            <div class="parallax-overlay"></div>
+            <div class="section-content">
+                <h2 class="section-title">Design & Prototyping</h2>
+                <p class="section-text">Our design systems and interactive prototypes bring ideas to life. We focus on
+                    accessibility, interaction design, and beautiful user interfaces.</p>
+            </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section class="scroll-section parallax" style="background-image: url('assets/capabilities/production.jpg');">
+            <div class="parallax-overlay"></div>
+            <div class="section-content">
+                <h2 class="section-title">Development & Tech</h2>
+                <p class="section-text">Using modern stacks like Vue, React, and robust platforms from WordPress to
+                    Shopify, we build fast, scalable, and secure applications.</p>
+            </div>
+        </section>
+
+        <!-- Section 5: Slideshow -->
+        <section class="scroll-section theme-dark" style="padding: 0;">
+            <div class="content-accordion" style="height: 100vh; width: 100%;">
+
+                <!-- Slide 1 -->
+                <div class="accordion-panel active">
+                    <img src="assets/kirstenmarie-tjFQ_G_zQpU-unsplash.jpg" alt="Organic Harmony" class="panel-bg">
+                    <div class="panel-overlay"></div>
+                    <div class="panel-vertical-title">
+                        <span>01</span>
+                        <h2>Organic Harmony</h2>
+                    </div>
+                    <div class="panel-content">
+                        <div class="slide-meta">
+                            <span class="slide-number">01</span>
+                            <div class="slide-icon"></div>
+                        </div>
+                        <h3>Organic Harmony</h3>
+                        <p>Blending the unpredictability of nature with digital precision.</p>
+                        <button class="panel-cta">View Logic</button>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="accordion-panel">
+                    <img src="assets/capabilities/bird.jpg" alt="Kinetic Flow" class="panel-bg">
+                    <div class="panel-overlay"></div>
+                    <div class="panel-vertical-title">
+                        <span>02</span>
+                        <h2>Kinetic Flow</h2>
+                    </div>
+                    <div class="panel-content">
+                        <div class="slide-meta">
+                            <span class="slide-number">02</span>
+                            <div class="slide-icon"></div>
+                        </div>
+                        <h3>Kinetic Flow</h3>
+                        <p>Motion creates emotion. We design for zero friction.</p>
+                        <button class="panel-cta">View Logic</button>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="accordion-panel">
+                    <img src="assets/capabilities/pexels-gurveer-kaur-3000781-13461490.jpg" alt="Tactile Space"
+                        class="panel-bg">
+                    <div class="panel-overlay"></div>
+                    <div class="panel-vertical-title">
+                        <span>03</span>
+                        <h2>Tactile Space</h2>
+                    </div>
+                    <div class="panel-content">
+                        <div class="slide-meta">
+                            <span class="slide-number">03</span>
+                            <div class="slide-icon"></div>
+                        </div>
+                        <h3>Tactile Space</h3>
+                        <p>Building multi-sensory realities without the overload.</p>
+                        <button class="panel-cta">View Logic</button>
+                    </div>
+                </div>
+
+                <!-- Slide 4 -->
+                <div class="accordion-panel">
+                    <img src="assets/capabilities/pexels-chiaroscuro-154214185-10684768.jpg" alt="Enduring Logic"
+                        class="panel-bg">
+                    <div class="panel-overlay"></div>
+                    <div class="panel-vertical-title">
+                        <span>04</span>
+                        <h2>Enduring Logic</h2>
+                    </div>
+                    <div class="panel-content">
+                        <div class="slide-meta">
+                            <span class="slide-number">04</span>
+                            <div class="slide-icon"></div>
+                        </div>
+                        <h3>Enduring Logic</h3>
+                        <p>Systems built to scale, adapt, and outlast the trend.</p>
+                        <button class="panel-cta">View Logic</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer inside scroll container to allow snapping to it -->
+        <div class="footer-section">
+            <site-footer></site-footer>
+        </div>
+    </div>
+
+    <script src="js/footer-component.js"></script>
+    <script src="js/header-component.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Simple Intersection Observer to trigger reveal animations for snapped sections
+        document.addEventListener("DOMContentLoaded", () => {
+            const sections = document.querySelectorAll('.scroll-section');
+            const container = document.getElementById('scroll-container');
+
+            // Need to set navbar class based on the currently visible section
+            const navbar = document.getElementById('navbar');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+
+                        // Handle navbar color based on section theme
+                        if (entry.target.classList.contains('theme-light')) {
+                            // wait a tick
+                            setTimeout(() => {
+                                navbar.classList.remove('nav-dark');
+                                navbar.classList.add('nav-light');
+                            }, 100);
+                        } else {
+                            setTimeout(() => {
+                                navbar.classList.remove('nav-light');
+                                navbar.classList.add('nav-dark');
+                            }, 100);
+                        }
+                    }
+                });
+            }, {
+                root: container,
+                threshold: 0.5
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Make first section visible right away
+            if (sections.length > 0) sections[0].classList.add('is-visible');
+
+            // --- Dynamic Smoother Parallax ---
+            const parallaxSections = document.querySelectorAll('.scroll-section.parallax');
+
+            // 1. Setup inner bg layers
+            parallaxSections.forEach(section => {
+                const bgImage = section.style.backgroundImage;
+                if (bgImage && bgImage !== 'none') {
+                    const bgDiv = document.createElement('div');
+                    bgDiv.className = 'parallax-bg-layer';
+                    bgDiv.style.backgroundImage = bgImage;
+                    section.insertBefore(bgDiv, section.firstChild);
+                    section.style.backgroundImage = 'none'; // remove from parent
+                }
+            });
+
+            // 2. Animate on scroll
+            const updateParallax = () => {
+                parallaxSections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    // Only animate if in viewport
+                    if (rect.top <= window.innerHeight && rect.bottom >= 0) {
+                        // Slower movement rate relative to the container
+                        const offset = rect.top * -0.2;
+                        const bgLayer = section.querySelector('.parallax-bg-layer');
+                        if (bgLayer) {
+                            bgLayer.style.transform = `translateY(${offset}px)`;
+                        }
+                    }
+                });
+            };
+
+            container.addEventListener('scroll', () => {
+                requestAnimationFrame(updateParallax);
+
+                // Add scrolled class to navbar when scrolling down the custom container
+                if (container.scrollTop > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Initial call to set positions correctly on load
+            updateParallax();
+        });
+    </script>
+</body>
+
+</html>

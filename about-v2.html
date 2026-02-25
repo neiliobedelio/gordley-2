@@ -13,36 +13,7 @@
 
 <body>
 
-    <!-- Header -->
-    <header class="navbar nav-dark" id="navbar">
-        <div class="logo">
-            <a href="index.html" style="text-decoration: none; color: inherit;">
-                <div class="logo-placeholder">The Gordley Group</div>
-            </a>
-        </div>
-        <div class="desktop-menu">
-            <a href="projects.html">Work</a>
-            <a href="index.html#capabilities">Capabilities</a>
-            <a href="about.html" class="active">About/Culture</a>
-            <a href="index.html#contact">Contact</a>
-        </div>
-        <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
-    </header>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu" id="mobile-menu">
-        <nav>
-            <ul>
-                <li><a href="projects.html">Work</a></li>
-                <li><a href="index.html#capabilities">Capabilities</a></li>
-                <li><a href="about.html">About/Culture</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
+    <site-header nav-class="nav-dark"></site-header>
 
     <!-- Scroll Sequence Hero Section -->
     <section class="scroll-sequence-hero">
@@ -284,6 +255,7 @@
 
     <script src="js/footer-component.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/header-component.js"></script>
     <script src="js/main.js"></script>
     <!-- Use scroll sequence script instead of particle hero -->
     <script src="js/scroll-sequence.js"></script>

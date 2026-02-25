@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "jimp": "^1.6.0",
     "svg-path-bbox": "^2.1.0"
   }
 }

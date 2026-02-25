@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gordley Group - Parallax Landing</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Parallax Container Specifics */
+        .parallax-wrapper {
+            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            perspective: 1px;
+            /* The distance from viewer to z=0 */
+        }
+
+        /* Essential for ensuring the body/html don't interfere with wrapper scroll */
+        body.parallax-active,
+        html.parallax-active {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        /* The Parallax Scene */
+        .parallax-hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            /* Container must be transparent so layers pushed into negative Z-space are visible */
+            background-color: transparent;
+            z-index: -1;
+        }
+
+        /* Base Layer Style */
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform-origin: center center;
+        }
+
+        /* 
+           Background Layer (Slowest)
+           Pushed far back, scaled up to compensate for distance
+        */
+        .layer-bg {
+            transform: translateZ(-2px) scale(3);
+            z-index: -3;
+        }
+
+        /* 
+           Middle-ground Layer 
+           Pushed slightly back 
+        */
+        .layer-mg {
+            transform: translateZ(-1px) scale(2);
+            z-index: -2;
+        }
+
+        /* 
+           Foreground Layer (Fastest, normal scroll speed)
+           At z=0, no scale needed 
+        */
+        .layer-fg {
+            transform: translateZ(0) scale(1.05);
+            /* Slight scale to prevent edge gaps */
+            z-index: -1;
+            bottom: -5vh;
+            /* Drop it slightly to overlap following content */
+        }
+
+        /* Content inside the hero (text, logos) */
+        .parallax-content {
+            z-index: 10;
+            text-align: center;
+            transform: translateZ(0);
+            /* Keep it normal speed */
+            color: #fff;
+        }
+
+        .parallax-title {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .parallax-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+
+        /* The rest of the page content */
+        .page-content {
+            position: relative;
+            z-index: 10;
+            background: #fff;
+            /* Solid background to cover parallax layers scrolling behind */
+            padding-top: 5rem;
+        }
+    </style>
+</head>
+
+<body class="parallax-active">
+
+    <!-- Special wrapper needed for CSS 3D parallax to maintain perspective on scroll -->
+    <div class="parallax-wrapper">
+
+        <site-header></site-header>
+
+        <!-- The Parallax Hero -->
+        <section class="parallax-hero">
+            <!-- Layers -->
+            <img src="assets/parallax_bg.png" alt="Starry Sky" class="parallax-layer layer-bg">
+            <img src="assets/parallax_mg_adjusted.png" alt="Distant Mountains" class="parallax-layer layer-mg">
+            <img src="assets/parallax_fg_adjusted.png" alt="Pine Forest" class="parallax-layer layer-fg">
+
+            <!-- Hero Content -->
+            <div class="parallax-content" data-aos="fade-up">
+                <h1 class="parallax-title">Reach New Heights</h1>
+                <p class="parallax-subtitle">Your journey starts here.</p>
+            </div>
+        </section>
+
+        <!-- Normal Page Content Follows -->
+        <div class="page-content">
+            <section class="mission-section">
+                <div class="container">
+                    <h2 data-aos="fade-up">
+                        We are a creative agency that helps brands <span class="highlight">stand out</span> in a crowded
+                        world.
+                        <div class="swoosh-placeholder"></div>
+                    </h2>
+                </div>
+            </section>
+
+            <!-- Capabilities Section Placeholder -->
+            <section id="capabilities" class="capabilities-section">
+                <div class="container">
+                    <h3 data-aos="fade-up">Capabilities</h3>
+                    <p style="text-align: center; margin-top: 2rem;">(Insert remaining content here...)</p>
+                </div>
+            </section>
+
+            <site-footer></site-footer>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/footer-component.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/header-component.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

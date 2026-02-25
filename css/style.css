@@ -821,6 +821,8 @@ button {
     transform-origin: bottom center;
     border-radius: var(--card-radius, 6px);
     overflow: hidden;
+    /* Default drop shadow for the cards */
+    box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.3);
 }
 
 .capability-card:first-child {

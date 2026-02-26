@@ -1,0 +1,134 @@
+/* =========================================
+   Card Components
+   ========================================= */
+
+.capability-card {
+    flex: 1;
+    min-width: 250px;
+    height: 480px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+.capability-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+}
+
+.cap-header {
+    flex: 2;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.cap-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    filter: grayscale(100%);
+    transition: transform 0.6s ease;
+}
+
+.capability-card:hover .cap-bg-image {
+    transform: scale(1.1);
+}
+
+.cap-tag {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.9;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.cap-header h4 {
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 400;
+    line-height: 1.1;
+    margin: 0;
+    font-family: var(--font-serif);
+    position: relative;
+}
+
+.cap-body {
+    flex: 1;
+    padding: 30px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cap-body p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--gray-text);
+    margin-bottom: 20px;
+}
+
+.cap-footer {
+    border-top: 1px solid var(--border-color);
+    padding: 20px 30px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gray-text);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Testimonial Card */
+.testimonial-card {
+    flex: 0 0 min(450px, 85vw);
+    background-color: var(--light-bg);
+    border-radius: var(--card-radius);
+    padding: clamp(20px, 4vw, 40px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 300px;
+    transition: transform 0.3s ease;
+    user-select: none;
+}
+
+/* Team Member Card */
+.team-member {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.member-image-wrapper {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background-color: var(--placeholder-color);
+    position: relative;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+    border-radius: var(--card-radius);
+}
+
+.team-member:hover .member-image-wrapper {
+    transform: scale(1.02);
+}

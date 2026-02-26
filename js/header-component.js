@@ -1,35 +1,37 @@
 class SiteHeader extends HTMLElement {
-    constructor() {
-        super();
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+    const isCaseStudy = window.location.pathname.includes("/case-studies/");
+    const depthMatch = window.location.pathname.match(/\//g);
+    // Calculate basePath based on directory depth from root, or simply:
+    let basePath = "";
+    if (window.location.pathname.includes("/case-studies/")) {
+      // Count depth inside case-studies, normally it's case-studies/project-name/index.html
+      basePath = "../../";
     }
 
-    connectedCallback() {
-        const isCaseStudy = window.location.pathname.includes('/case-studies/');
-        const depthMatch = window.location.pathname.match(/\//g);
-        // Calculate basePath based on directory depth from root, or simply:
-        let basePath = '';
-        if (window.location.pathname.includes('/case-studies/')) {
-            // Count depth inside case-studies, normally it's case-studies/project-name/index.html
-            basePath = '../../';
-        }
+    const isHome =
+      window.location.pathname.endsWith("/") ||
+      (window.location.pathname.endsWith("index.html") && !isCaseStudy);
 
-        const isHome = window.location.pathname.endsWith('/') || window.location.pathname.endsWith('index.html') && !isCaseStudy;
+    // Let's support an attribute to specify styling, or default to nav-dark if it's home
+    // The user specifically requested "styling exceptions for the homepage"
+    let navClass = "navbar";
+    if (this.hasAttribute("nav-class")) {
+      navClass += " " + this.getAttribute("nav-class");
+    } else if (isHome) {
+      navClass += " nav-dark";
+    }
 
-        // Let's support an attribute to specify styling, or default to nav-dark if it's home
-        // The user specifically requested "styling exceptions for the homepage"
-        let navClass = "navbar";
-        if (this.hasAttribute('nav-class')) {
-            navClass += " " + this.getAttribute('nav-class');
-        } else if (isHome) {
-            navClass += " nav-dark";
-        }
+    // Additional inline styles for exceptions like marketing.html
+    const extraStyles = this.getAttribute("nav-style") || "";
 
-        // Additional inline styles for exceptions like marketing.html
-        const extraStyles = this.getAttribute('nav-style') || '';
+    const contactLink = isHome ? "#contact" : `${basePath}index.html#contact`;
 
-        const contactLink = isHome ? '#contact' : `${basePath}index.html#contact`;
-
-        this.innerHTML = `
+    this.innerHTML = `
             <header class="${navClass}" id="navbar" style="${extraStyles}">
                 <div class="logo">
                     <a href="${basePath}index.html" style="text-decoration: none; color: inherit;">
@@ -96,88 +98,93 @@ class SiteHeader extends HTMLElement {
             </div>
         `;
 
-        // Hamburger Menu Toggle
-        const hamburger = this.querySelector('#hamburger');
-        const mobileMenu = this.querySelector('#mobile-menu');
+    // Hamburger Menu Toggle
+    const hamburger = this.querySelector("#hamburger");
+    const mobileMenu = this.querySelector("#mobile-menu");
 
-        if (hamburger && mobileMenu) {
-            hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('is-active');
-                mobileMenu.classList.toggle('active');
-            });
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("is-active");
+        mobileMenu.classList.toggle("active");
+      });
 
-            // Close mobile menu when a link is clicked
-            this.querySelectorAll('.mobile-menu a').forEach(link => {
-                link.addEventListener('click', () => {
-                    hamburger.classList.remove('is-active');
-                    mobileMenu.classList.remove('active');
-                });
-            });
-        }
-
-        // Navbar scroll effect
-        const navbar = this.querySelector('#navbar');
-        if (navbar) {
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
-        }
-
-        // Theme Toggle Logic
-        const themeToggles = this.querySelectorAll('.theme-toggle');
-
-        // Check for saved theme preference or system preference
-        const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            this.updateToggleIcons('dark');
-        }
-
-        themeToggles.forEach(toggle => {
-            toggle.addEventListener('click', () => {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                if (currentTheme === 'dark') {
-                    document.documentElement.removeAttribute('data-theme');
-                    localStorage.setItem('theme', 'light');
-                    this.updateToggleIcons('light');
-                } else {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                    localStorage.setItem('theme', 'dark');
-                    this.updateToggleIcons('dark');
-                }
-            });
+      // Close mobile menu when a link is clicked
+      this.querySelectorAll(".mobile-menu a").forEach((link) => {
+        link.addEventListener("click", () => {
+          hamburger.classList.remove("is-active");
+          mobileMenu.classList.remove("active");
         });
+      });
     }
 
-    updateToggleIcons(theme) {
-        const themeToggles = this.querySelectorAll('.theme-toggle');
-        themeToggles.forEach(toggle => {
-            const sunIcon = toggle.querySelector('.sun-icon');
-            const moonIcon = toggle.querySelector('.moon-icon');
-            if (theme === 'dark') {
-                if (sunIcon) sunIcon.style.display = 'none';
-                if (moonIcon) moonIcon.style.display = 'block';
-            } else {
-                if (sunIcon) sunIcon.style.display = 'block';
-                if (moonIcon) moonIcon.style.display = 'none';
-            }
-        });
+    // Navbar scroll effect
+    const navbar = this.querySelector("#navbar");
+    if (navbar) {
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
     }
+
+    // Theme Toggle Logic
+    const themeToggles = this.querySelectorAll(".theme-toggle");
+
+    // Check for saved theme preference or system preference
+    const savedTheme = localStorage.getItem("theme");
+    const systemPrefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
+      document.documentElement.setAttribute("data-theme", "dark");
+      this.updateToggleIcons("dark");
+    }
+
+    themeToggles.forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme");
+        if (currentTheme === "dark") {
+          document.documentElement.removeAttribute("data-theme");
+          localStorage.setItem("theme", "light");
+          this.updateToggleIcons("light");
+        } else {
+          document.documentElement.setAttribute("data-theme", "dark");
+          localStorage.setItem("theme", "dark");
+          this.updateToggleIcons("dark");
+        }
+      });
+    });
+  }
+
+  updateToggleIcons(theme) {
+    const themeToggles = this.querySelectorAll(".theme-toggle");
+    themeToggles.forEach((toggle) => {
+      const sunIcon = toggle.querySelector(".sun-icon");
+      const moonIcon = toggle.querySelector(".moon-icon");
+      if (theme === "dark") {
+        if (sunIcon) sunIcon.style.display = "none";
+        if (moonIcon) moonIcon.style.display = "block";
+      } else {
+        if (sunIcon) sunIcon.style.display = "block";
+        if (moonIcon) moonIcon.style.display = "none";
+      }
+    });
+  }
 }
 
 // Ensure theme is applied before component loads to prevent flash
 (function () {
-    const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-    }
+  const savedTheme = localStorage.getItem("theme");
+  const systemPrefersDark =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+  if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
 })();
 
-customElements.define('site-header', SiteHeader);
+customElements.define("site-header", SiteHeader);

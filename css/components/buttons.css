@@ -1,0 +1,64 @@
+/* =========================================
+   Button Components
+   ========================================= */
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+    padding: 15px 30px;
+}
+
+.cta-button {
+    background-color: transparent;
+    border: 2px solid var(--text-color, white);
+    color: var(--text-color, white);
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: background-color 0.3s, color 0.3s;
+    align-self: flex-start;
+    border-radius: 4px;
+    /* Unified button style */
+}
+
+.cta-button:hover {
+    background-color: var(--text-color, white);
+    color: var(--bg-color, black);
+}
+
+.process-cta {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.process-cta:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.theme-toggle {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.theme-toggle:hover {
+    color: var(--accent-color);
+}

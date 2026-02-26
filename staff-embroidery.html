@@ -1,37 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Staff Embroidery Demo</title>
     <style>
-        body {
-            margin: 0;
-            background: #111;
-            overflow: hidden;
-        }
+      body {
+        margin: 0;
+        background: #111;
+        overflow: hidden;
+      }
 
-        canvas {
-            display: block;
-        }
+      canvas {
+        display: block;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <canvas id="embroidery-canvas"></canvas>
     <script src="js/staff-embroidery.js"></script>
     <script>
-        const embroidery = new StaffEmbroidery({
-            canvasSelector: '#embroidery-canvas',
-            imagePaths: [
-                'assets/691b9be280a7bf422c59ddee_dennis_boyle_1.jpg',
-                'assets/691b9be5e5271bbeec007485_dennis_boyle_2.jpg'
-            ],
-            hexSize: 3,
-            speed: 50 // Faster for demo
-        });
+      const embroidery = new StaffEmbroidery({
+        canvasSelector: "#embroidery-canvas",
+        imagePaths: [
+          "assets/691b9be280a7bf422c59ddee_dennis_boyle_1.jpg",
+          "assets/691b9be5e5271bbeec007485_dennis_boyle_2.jpg",
+        ],
+        hexSize: 3,
+        speed: 50, // Faster for demo
+      });
     </script>
-</body>
-
+  </body>
 </html>

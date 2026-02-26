@@ -1,14 +1,14 @@
 class SiteFooter extends HTMLElement {
-    constructor() {
-        super();
-    }
+  constructor() {
+    super();
+  }
 
-    connectedCallback() {
-        // Simple logic to determine relative path to root
-        const isCaseStudy = window.location.pathname.includes('/case-studies/');
-        const basePath = isCaseStudy ? '../../' : '';
+  connectedCallback() {
+    // Simple logic to determine relative path to root
+    const isCaseStudy = window.location.pathname.includes("/case-studies/");
+    const basePath = isCaseStudy ? "../../" : "";
 
-        this.innerHTML = `
+    this.innerHTML = `
         <div id="gravity-container" style="width: 100%; height: 300px; background: transparent; overflow: hidden; position: relative;"></div>
         <footer class="footer" style="padding-top: 50px;"> <!-- Reduced padding since gravity area is above -->
             <div class="footer__logo-column">
@@ -71,223 +71,292 @@ class SiteFooter extends HTMLElement {
         </footer>
         `;
 
-        // Load Matter.js if not present
-        if (!window.Matter) {
-            const script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js';
-            script.onload = () => this.initGravity();
-            document.head.appendChild(script);
-        } else {
-            this.initGravity();
-        }
+    // Load Matter.js if not present
+    if (!window.Matter) {
+      const script = document.createElement("script");
+      script.src =
+        "https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js";
+      script.onload = () => this.initGravity();
+      document.head.appendChild(script);
+    } else {
+      this.initGravity();
+    }
+  }
+
+  initGravity() {
+    const container = this.querySelector("#gravity-container");
+    if (!container || !window.Matter) return;
+
+    const Engine = Matter.Engine,
+      Render = Matter.Render,
+      Runner = Matter.Runner,
+      Bodies = Matter.Bodies,
+      Composite = Matter.Composite,
+      Events = Matter.Events,
+      Mouse = Matter.Mouse,
+      MouseConstraint = Matter.MouseConstraint;
+
+    // Create engine
+    const engine = Engine.create();
+    const world = engine.world;
+
+    // Improve simulation precision for stacking
+    engine.positionIterations = 10;
+    engine.velocityIterations = 10;
+
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    // Create renderer
+    const render = Render.create({
+      element: container,
+      engine: engine,
+      options: {
+        width: width,
+        height: height,
+        background: "transparent",
+        wireframes: false, // Important for custom rendering
+        pixelRatio: window.devicePixelRatio,
+      },
+    });
+
+    // Letter Definitions from Logo SVG Paths
+    const textToRender = "GORDLEY";
+    const letters = [];
+
+    // Extracted SVG bounding boxes and paths from the new asset*.svg files
+    const svgData = {
+      G: {
+        d: "M49.9,104.59c-9.89,0-18.58-2.11-26.08-6.32-7.5-4.21-13.34-10.22-17.53-18.01C2.1,72.46,0,63.21,0,52.5s2.24-20.72,6.73-28.54c4.49-7.82,10.49-13.76,18.01-17.84C32.27,2.04,40.6,0,49.77,0c6.02,0,11.61.85,16.78,2.56,5.17,1.71,9.76,4.14,13.77,7.28,4.01,3.14,7.23,6.85,9.67,11.11,2.44,4.26,3.93,8.94,4.48,14.05h-27.89c-.41-1.73-1.08-3.28-2.02-4.65-.93-1.37-2.1-2.52-3.49-3.45-1.39-.93-2.99-1.64-4.78-2.12-1.8-.48-3.79-.72-5.98-.72-4.6,0-8.54,1.11-11.83,3.32-3.28,2.21-5.78,5.41-7.49,9.6-1.71,4.19-2.56,9.23-2.56,15.11s.82,11.07,2.46,15.31,4.07,7.49,7.28,9.74,7.21,3.38,12,3.38c4.19,0,7.69-.62,10.49-1.85,2.8-1.23,4.9-2.97,6.29-5.23,1.39-2.26,2.08-4.91,2.08-7.96l4.79.55h-23.24v-19.69h45.12v14.08c0,9.3-1.96,17.24-5.88,23.82-3.92,6.59-9.33,11.62-16.24,15.11s-14.8,5.23-23.69,5.23Z",
+        x: 0,
+        y: 0,
+        w: 95.7,
+        h: 104.59,
+      },
+      O: {
+        d: "M39.58,78.75c-8.29,0-15.4-1.65-21.33-4.96-5.92-3.3-10.45-7.91-13.57-13.81C1.56,54.08,0,47.21,0,39.37s1.56-14.71,4.68-20.61c3.12-5.9,7.64-10.5,13.57-13.81C24.18,1.65,31.28,0,39.58,0s15.38,1.65,21.26,4.96c5.88,3.3,10.38,7.91,13.5,13.81,3.12,5.9,4.68,12.77,4.68,20.61s-1.56,14.71-4.68,20.61c-3.12,5.9-7.62,10.5-13.5,13.81-5.88,3.3-12.97,4.96-21.26,4.96ZM39.58,58.24c2.37,0,4.41-.75,6.12-2.26,1.71-1.5,3.02-3.68,3.93-6.53.91-2.85,1.37-6.25,1.37-10.22s-.46-7.41-1.37-10.19c-.91-2.78-2.22-4.9-3.93-6.36-1.71-1.46-3.75-2.19-6.12-2.19s-4.49.73-6.22,2.19c-1.73,1.46-3.05,3.58-3.96,6.36-.91,2.78-1.37,6.18-1.37,10.19s.46,7.37,1.37,10.22c.91,2.85,2.23,5.02,3.96,6.53,1.73,1.5,3.8,2.26,6.22,2.26Z",
+        x: 0,
+        y: 0,
+        w: 79.02,
+        h: 78.75,
+      },
+      R: {
+        d: "M0,77.38V.96h26.66v14.63h.82c1.37-5.42,3.57-9.38,6.6-11.86,3.03-2.48,6.57-3.73,10.63-3.73,1.18,0,2.37.09,3.55.27,1.18.18,2.32.46,3.42.82v23.38c-1.37-.5-3.04-.85-5.02-1.06s-3.68-.31-5.09-.31c-2.69,0-5.1.6-7.25,1.81-2.14,1.21-3.82,2.89-5.02,5.06-1.21,2.17-1.81,4.71-1.81,7.62v39.78H0Z",
+        x: 0,
+        y: 0,
+        w: 51.68,
+        h: 77.38,
+      },
+      D: {
+        d: "M30.08,102.81c-5.42,0-10.42-1.42-15-4.27-4.58-2.85-8.24-7.17-10.97-12.95-2.73-5.79-4.1-13.08-4.1-21.87,0-9.25,1.44-16.76,4.31-22.52,2.87-5.76,6.58-9.99,11.14-12.68,4.56-2.69,9.34-4.03,14.35-4.03,3.78,0,7.1.65,9.95,1.95,2.85,1.3,5.24,3.04,7.18,5.23,1.94,2.19,3.38,4.58,4.34,7.18h.41V0h27.48v101.85h-27.21v-12.58h-.68c-1.05,2.6-2.55,4.91-4.51,6.94-1.96,2.03-4.33,3.63-7.11,4.82-2.78,1.18-5.97,1.78-9.57,1.78ZM40.19,81.76c2.51,0,4.67-.74,6.49-2.22,1.82-1.48,3.22-3.57,4.2-6.25.98-2.69,1.47-5.88,1.47-9.57s-.49-7.03-1.47-9.74c-.98-2.71-2.38-4.8-4.2-6.25-1.82-1.46-3.99-2.19-6.49-2.19s-4.65.73-6.43,2.19c-1.78,1.46-3.13,3.54-4.07,6.25-.93,2.71-1.4,5.96-1.4,9.74s.47,6.96,1.4,9.67c.93,2.71,2.29,4.79,4.07,6.22,1.78,1.44,3.92,2.15,6.43,2.15Z",
+        x: 0,
+        y: 0,
+        w: 79.16,
+        h: 102.81,
+      },
+      L: { d: "M27.48,0v101.85H0V0h27.48Z", x: 0, y: 0, w: 27.48, h: 101.85 },
+      E: {
+        d: "M39.37,78.75c-8.16,0-15.19-1.56-21.09-4.68-5.9-3.12-10.42-7.62-13.57-13.5C1.57,54.69,0,47.62,0,39.37s1.58-14.78,4.75-20.68c3.17-5.9,7.64-10.49,13.43-13.77C23.97,1.64,30.81,0,38.69,0c5.79,0,11.02.9,15.69,2.7,4.67,1.8,8.67,4.4,12,7.79,3.33,3.4,5.88,7.51,7.66,12.34,1.78,4.83,2.67,10.3,2.67,16.41v6.29H8.48v-15.04h55.37l-12.85,3.14c0-3.1-.46-5.71-1.37-7.83-.91-2.12-2.26-3.74-4.03-4.85-1.78-1.12-3.99-1.67-6.63-1.67s-4.85.56-6.63,1.67c-1.78,1.12-3.12,2.73-4.03,4.85-.91,2.12-1.37,4.73-1.37,7.83v10.94c0,3.37.54,6.16,1.61,8.37,1.07,2.21,2.59,3.85,4.55,4.92,1.96,1.07,4.24,1.61,6.84,1.61,1.87,0,3.57-.26,5.09-.79,1.53-.52,2.84-1.27,3.93-2.26,1.09-.98,1.91-2.18,2.46-3.59l24.2,3.55c-1.28,4.56-3.53,8.51-6.77,11.86-3.24,3.35-7.33,5.94-12.27,7.76-4.95,1.82-10.68,2.73-17.19,2.73Z",
+        x: 0,
+        y: 0,
+        w: 76.7,
+        h: 78.75,
+      },
+      Y: {
+        d: "M6.22,102.95l6.02-19.55,3.55.96c3.01.77,5.6.99,7.79.65s3.78-1.08,4.79-2.22c1-1.14,1.23-2.51.68-4.1l-.75-2.19L0,0h28.85l9.91,34.86c1.46,5.24,2.59,10.52,3.38,15.83.8,5.31,1.79,11.15,2.97,17.53h-4.99c1.18-6.38,2.39-12.25,3.62-17.6,1.23-5.35,2.64-10.61,4.24-15.76L58.93,0h28.44l-31.51,83.4c-1.55,4.15-3.65,7.9-6.29,11.25-2.64,3.35-6.07,6-10.29,7.96-4.22,1.96-9.54,2.94-15.96,2.94-3.14,0-6.24-.23-9.3-.68-3.05-.46-5.65-1.09-7.79-1.91Z",
+        x: 0,
+        y: 0,
+        w: 87.36,
+        h: 105.55,
+      },
+    };
+
+    // Initialize Path2D objects for performing custom context drawing
+    for (const char in svgData) {
+      svgData[char].path2d = new Path2D(svgData[char].d);
     }
 
-    initGravity() {
-        const container = this.querySelector('#gravity-container');
-        if (!container || !window.Matter) return;
+    const scale = 1.08; // 0.9 + 20% larger
 
-        const Engine = Matter.Engine,
-            Render = Matter.Render,
-            Runner = Matter.Runner,
-            Bodies = Matter.Bodies,
-            Composite = Matter.Composite,
-            Events = Matter.Events,
-            Mouse = Matter.Mouse,
-            MouseConstraint = Matter.MouseConstraint;
+    // Calculate exact total width to center them and let them touch
+    let totalW = 0;
+    textToRender
+      .split("")
+      .forEach((char) => (totalW += svgData[char].w * scale));
 
-        // Create engine
-        const engine = Engine.create();
-        const world = engine.world;
+    let currentX = (width - totalW) / 2;
+    if (currentX < 50) currentX = 50;
 
-        // Improve simulation precision for stacking
-        engine.positionIterations = 10;
-        engine.velocityIterations = 10;
+    textToRender.split("").forEach((char, index) => {
+      const def = svgData[char];
+      const charW = def.w * scale;
+      const charH = def.h * scale;
 
-        const width = container.clientWidth;
-        const height = container.clientHeight;
+      // Start tightly packed so they touch when they land
+      const x = currentX + charW / 2;
+      currentX += charW;
 
-        // Create renderer
-        const render = Render.create({
-            element: container,
-            engine: engine,
-            options: {
-                width: width,
-                height: height,
-                background: 'transparent',
-                wireframes: false, // Important for custom rendering
-                pixelRatio: window.devicePixelRatio
-            }
-        });
+      const y = -100 - index * 150; // Stagger drop heights significantly
 
-        // Letter Definitions from Logo SVG Paths
-        const textToRender = "GORDLEY";
-        const letters = [];
+      // Create a body scaled to exactly match SVG bounds
+      const body = Bodies.rectangle(x, y, charW, charH, {
+        chamfer: { radius: 8 },
+        restitution: 0.2, // Lower bounciness so they pile closely
+        friction: 0.8,
+        render: {
+          visible: false, // Don't draw the black box
+          text: {
+            content: char, // Track original char for rendering below
+          },
+        },
+      });
 
-        // Extracted SVG bounding boxes and paths from the new asset*.svg files
-        const svgData = {
-            'G': { d: "M49.9,104.59c-9.89,0-18.58-2.11-26.08-6.32-7.5-4.21-13.34-10.22-17.53-18.01C2.1,72.46,0,63.21,0,52.5s2.24-20.72,6.73-28.54c4.49-7.82,10.49-13.76,18.01-17.84C32.27,2.04,40.6,0,49.77,0c6.02,0,11.61.85,16.78,2.56,5.17,1.71,9.76,4.14,13.77,7.28,4.01,3.14,7.23,6.85,9.67,11.11,2.44,4.26,3.93,8.94,4.48,14.05h-27.89c-.41-1.73-1.08-3.28-2.02-4.65-.93-1.37-2.1-2.52-3.49-3.45-1.39-.93-2.99-1.64-4.78-2.12-1.8-.48-3.79-.72-5.98-.72-4.6,0-8.54,1.11-11.83,3.32-3.28,2.21-5.78,5.41-7.49,9.6-1.71,4.19-2.56,9.23-2.56,15.11s.82,11.07,2.46,15.31,4.07,7.49,7.28,9.74,7.21,3.38,12,3.38c4.19,0,7.69-.62,10.49-1.85,2.8-1.23,4.9-2.97,6.29-5.23,1.39-2.26,2.08-4.91,2.08-7.96l4.79.55h-23.24v-19.69h45.12v14.08c0,9.3-1.96,17.24-5.88,23.82-3.92,6.59-9.33,11.62-16.24,15.11s-14.8,5.23-23.69,5.23Z", x: 0, y: 0, w: 95.7, h: 104.59 },
-            'O': { d: "M39.58,78.75c-8.29,0-15.4-1.65-21.33-4.96-5.92-3.3-10.45-7.91-13.57-13.81C1.56,54.08,0,47.21,0,39.37s1.56-14.71,4.68-20.61c3.12-5.9,7.64-10.5,13.57-13.81C24.18,1.65,31.28,0,39.58,0s15.38,1.65,21.26,4.96c5.88,3.3,10.38,7.91,13.5,13.81,3.12,5.9,4.68,12.77,4.68,20.61s-1.56,14.71-4.68,20.61c-3.12,5.9-7.62,10.5-13.5,13.81-5.88,3.3-12.97,4.96-21.26,4.96ZM39.58,58.24c2.37,0,4.41-.75,6.12-2.26,1.71-1.5,3.02-3.68,3.93-6.53.91-2.85,1.37-6.25,1.37-10.22s-.46-7.41-1.37-10.19c-.91-2.78-2.22-4.9-3.93-6.36-1.71-1.46-3.75-2.19-6.12-2.19s-4.49.73-6.22,2.19c-1.73,1.46-3.05,3.58-3.96,6.36-.91,2.78-1.37,6.18-1.37,10.19s.46,7.37,1.37,10.22c.91,2.85,2.23,5.02,3.96,6.53,1.73,1.5,3.8,2.26,6.22,2.26Z", x: 0, y: 0, w: 79.02, h: 78.75 },
-            'R': { d: "M0,77.38V.96h26.66v14.63h.82c1.37-5.42,3.57-9.38,6.6-11.86,3.03-2.48,6.57-3.73,10.63-3.73,1.18,0,2.37.09,3.55.27,1.18.18,2.32.46,3.42.82v23.38c-1.37-.5-3.04-.85-5.02-1.06s-3.68-.31-5.09-.31c-2.69,0-5.1.6-7.25,1.81-2.14,1.21-3.82,2.89-5.02,5.06-1.21,2.17-1.81,4.71-1.81,7.62v39.78H0Z", x: 0, y: 0, w: 51.68, h: 77.38 },
-            'D': { d: "M30.08,102.81c-5.42,0-10.42-1.42-15-4.27-4.58-2.85-8.24-7.17-10.97-12.95-2.73-5.79-4.1-13.08-4.1-21.87,0-9.25,1.44-16.76,4.31-22.52,2.87-5.76,6.58-9.99,11.14-12.68,4.56-2.69,9.34-4.03,14.35-4.03,3.78,0,7.1.65,9.95,1.95,2.85,1.3,5.24,3.04,7.18,5.23,1.94,2.19,3.38,4.58,4.34,7.18h.41V0h27.48v101.85h-27.21v-12.58h-.68c-1.05,2.6-2.55,4.91-4.51,6.94-1.96,2.03-4.33,3.63-7.11,4.82-2.78,1.18-5.97,1.78-9.57,1.78ZM40.19,81.76c2.51,0,4.67-.74,6.49-2.22,1.82-1.48,3.22-3.57,4.2-6.25.98-2.69,1.47-5.88,1.47-9.57s-.49-7.03-1.47-9.74c-.98-2.71-2.38-4.8-4.2-6.25-1.82-1.46-3.99-2.19-6.49-2.19s-4.65.73-6.43,2.19c-1.78,1.46-3.13,3.54-4.07,6.25-.93,2.71-1.4,5.96-1.4,9.74s.47,6.96,1.4,9.67c.93,2.71,2.29,4.79,4.07,6.22,1.78,1.44,3.92,2.15,6.43,2.15Z", x: 0, y: 0, w: 79.16, h: 102.81 },
-            'L': { d: "M27.48,0v101.85H0V0h27.48Z", x: 0, y: 0, w: 27.48, h: 101.85 },
-            'E': { d: "M39.37,78.75c-8.16,0-15.19-1.56-21.09-4.68-5.9-3.12-10.42-7.62-13.57-13.5C1.57,54.69,0,47.62,0,39.37s1.58-14.78,4.75-20.68c3.17-5.9,7.64-10.49,13.43-13.77C23.97,1.64,30.81,0,38.69,0c5.79,0,11.02.9,15.69,2.7,4.67,1.8,8.67,4.4,12,7.79,3.33,3.4,5.88,7.51,7.66,12.34,1.78,4.83,2.67,10.3,2.67,16.41v6.29H8.48v-15.04h55.37l-12.85,3.14c0-3.1-.46-5.71-1.37-7.83-.91-2.12-2.26-3.74-4.03-4.85-1.78-1.12-3.99-1.67-6.63-1.67s-4.85.56-6.63,1.67c-1.78,1.12-3.12,2.73-4.03,4.85-.91,2.12-1.37,4.73-1.37,7.83v10.94c0,3.37.54,6.16,1.61,8.37,1.07,2.21,2.59,3.85,4.55,4.92,1.96,1.07,4.24,1.61,6.84,1.61,1.87,0,3.57-.26,5.09-.79,1.53-.52,2.84-1.27,3.93-2.26,1.09-.98,1.91-2.18,2.46-3.59l24.2,3.55c-1.28,4.56-3.53,8.51-6.77,11.86-3.24,3.35-7.33,5.94-12.27,7.76-4.95,1.82-10.68,2.73-17.19,2.73Z", x: 0, y: 0, w: 76.7, h: 78.75 },
-            'Y': { d: "M6.22,102.95l6.02-19.55,3.55.96c3.01.77,5.6.99,7.79.65s3.78-1.08,4.79-2.22c1-1.14,1.23-2.51.68-4.1l-.75-2.19L0,0h28.85l9.91,34.86c1.46,5.24,2.59,10.52,3.38,15.83.8,5.31,1.79,11.15,2.97,17.53h-4.99c1.18-6.38,2.39-12.25,3.62-17.6,1.23-5.35,2.64-10.61,4.24-15.76L58.93,0h28.44l-31.51,83.4c-1.55,4.15-3.65,7.9-6.29,11.25-2.64,3.35-6.07,6-10.29,7.96-4.22,1.96-9.54,2.94-15.96,2.94-3.14,0-6.24-.23-9.3-.68-3.05-.46-5.65-1.09-7.79-1.91Z", x: 0, y: 0, w: 87.36, h: 105.55 }
-        };
+      letters.push(body);
+    });
 
-        // Initialize Path2D objects for performing custom context drawing
-        for (const char in svgData) {
-            svgData[char].path2d = new Path2D(svgData[char].d);
+    // Add Ground (shifted down by 2px to overlap footer top edge)
+    const ground = Bodies.rectangle(width / 2, height + 32, width, 60, {
+      isStatic: true,
+      render: { visible: false },
+    });
+
+    // Add Walls (invisible) to keep them in view
+    const wallLeft = Bodies.rectangle(-30, height / 2, 60, height * 2, {
+      isStatic: true,
+      render: { visible: false },
+    });
+    const wallRight = Bodies.rectangle(width + 30, height / 2, 60, height * 2, {
+      isStatic: true,
+      render: { visible: false },
+    });
+
+    // Add mouse control
+    const mouse = Mouse.create(render.canvas);
+    const mouseConstraint = MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.2,
+        render: {
+          visible: false,
+        },
+      },
+    });
+
+    // Allow page scrolling by removing the mousewheel event capture
+    mouse.element.removeEventListener("mousewheel", mouse.mousewheel);
+    mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
+
+    // Keep the mouse in sync with rendering
+    render.mouse = mouse;
+
+    Composite.add(world, [
+      ...letters,
+      ground,
+      wallLeft,
+      wallRight,
+      mouseConstraint,
+    ]);
+
+    // Determine the initial fill color from CSS variables
+    let currentFillColor =
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--footer-bg")
+        .trim() || "#1b1b1b";
+
+    // Listen for theme changes to update the color dynamically
+    const observerTarget = document.documentElement;
+    const mutationObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "data-theme") {
+          // Slight delay to allow CSS variable to be recomputed
+          setTimeout(() => {
+            currentFillColor =
+              getComputedStyle(document.documentElement)
+                .getPropertyValue("--footer-bg")
+                .trim() || "#1b1b1b";
+          }, 10);
         }
+      });
+    });
+    mutationObserver.observe(observerTarget, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
 
-        const scale = 1.08; // 0.9 + 20% larger
+    // Custom Rendering for SVG text
+    Events.on(render, "afterRender", function () {
+      const context = render.context;
+      context.fillStyle = currentFillColor;
 
-        // Calculate exact total width to center them and let them touch
-        let totalW = 0;
-        textToRender.split('').forEach(char => totalW += svgData[char].w * scale);
+      letters.forEach((body) => {
+        const { position, angle, render } = body;
+        const char = render.text.content;
+        const def = svgData[char];
 
-        let currentX = (width - totalW) / 2;
-        if (currentX < 50) currentX = 50;
+        if (def && def.path2d) {
+          context.save();
+          context.translate(position.x, position.y);
+          context.rotate(angle);
 
-        textToRender.split('').forEach((char, index) => {
-            const def = svgData[char];
-            const charW = def.w * scale;
-            const charH = def.h * scale;
+          // We extracted exact 0-indexed bounds from individual SVGs.
+          context.scale(scale, scale);
+          context.translate(-def.w / 2, -def.h / 2);
 
-            // Start tightly packed so they touch when they land
-            const x = currentX + (charW / 2);
-            currentX += charW;
+          context.fill(def.path2d);
+          context.restore();
+        }
+      });
+    });
 
-            const y = -100 - (index * 150); // Stagger drop heights significantly
+    // Intersection Observer to start/stop
+    const runner = Runner.create();
+    let isRunning = false;
 
-            // Create a body scaled to exactly match SVG bounds
-            const body = Bodies.rectangle(x, y, charW, charH, {
-                chamfer: { radius: 8 },
-                restitution: 0.2, // Lower bounciness so they pile closely
-                friction: 0.8,
-                render: {
-                    visible: false, // Don't draw the black box
-                    text: {
-                        content: char // Track original char for rendering below
-                    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (!isRunning) {
+              Runner.run(runner, engine);
+              Render.run(render);
+              isRunning = true;
+
+              // "Jostle" them if they are asleep/stuck in the air
+              letters.forEach((body) => {
+                if (body.position.y < -50) {
+                  // If still above screen (reset state), verify they wake up
+                  Matter.Body.setStatic(body, false);
                 }
-            });
-
-            letters.push(body);
-        });
-
-        // Add Ground (shifted down by 2px to overlap footer top edge)
-        const ground = Bodies.rectangle(width / 2, height + 32, width, 60, {
-            isStatic: true,
-            render: { visible: false }
-        });
-
-        // Add Walls (invisible) to keep them in view
-        const wallLeft = Bodies.rectangle(-30, height / 2, 60, height * 2, { isStatic: true, render: { visible: false } });
-        const wallRight = Bodies.rectangle(width + 30, height / 2, 60, height * 2, { isStatic: true, render: { visible: false } });
-
-        // Add mouse control
-        const mouse = Mouse.create(render.canvas);
-        const mouseConstraint = MouseConstraint.create(engine, {
-            mouse: mouse,
-            constraint: {
-                stiffness: 0.2,
-                render: {
-                    visible: false
-                }
+              });
             }
+          } else {
+            // Optional: Stop when out of view to save performance
+            // Runner.stop(runner);
+            // Render.stop(render);
+            // isRunning = false;
+          }
         });
+      },
+      { threshold: 0.1 },
+    );
 
-        // Allow page scrolling by removing the mousewheel event capture
-        mouse.element.removeEventListener("mousewheel", mouse.mousewheel);
-        mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
+    observer.observe(container);
 
-        // Keep the mouse in sync with rendering
-        render.mouse = mouse;
-
-        Composite.add(world, [...letters, ground, wallLeft, wallRight, mouseConstraint]);
-
-        // Determine the initial fill color from CSS variables
-        let currentFillColor = getComputedStyle(document.documentElement).getPropertyValue('--footer-bg').trim() || '#1b1b1b';
-
-        // Listen for theme changes to update the color dynamically
-        const observerTarget = document.documentElement;
-        const mutationObserver = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'data-theme') {
-                    // Slight delay to allow CSS variable to be recomputed
-                    setTimeout(() => {
-                        currentFillColor = getComputedStyle(document.documentElement).getPropertyValue('--footer-bg').trim() || '#1b1b1b';
-                    }, 10);
-                }
-            });
-        });
-        mutationObserver.observe(observerTarget, { attributes: true, attributeFilter: ['data-theme'] });
-
-        // Custom Rendering for SVG text
-        Events.on(render, 'afterRender', function () {
-            const context = render.context;
-            context.fillStyle = currentFillColor;
-
-            letters.forEach(body => {
-                const { position, angle, render } = body;
-                const char = render.text.content;
-                const def = svgData[char];
-
-                if (def && def.path2d) {
-                    context.save();
-                    context.translate(position.x, position.y);
-                    context.rotate(angle);
-
-                    // We extracted exact 0-indexed bounds from individual SVGs.
-                    context.scale(scale, scale);
-                    context.translate(-def.w / 2, -def.h / 2);
-
-                    context.fill(def.path2d);
-                    context.restore();
-                }
-            });
-        });
-
-        // Intersection Observer to start/stop
-        const runner = Runner.create();
-        let isRunning = false;
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    if (!isRunning) {
-                        Runner.run(runner, engine);
-                        Render.run(render);
-                        isRunning = true;
-
-                        // "Jostle" them if they are asleep/stuck in the air
-                        letters.forEach(body => {
-                            if (body.position.y < -50) {
-                                // If still above screen (reset state), verify they wake up
-                                Matter.Body.setStatic(body, false);
-                            }
-                        });
-                    }
-                } else {
-                    // Optional: Stop when out of view to save performance
-                    // Runner.stop(runner);
-                    // Render.stop(render);
-                    // isRunning = false;
-                }
-            });
-        }, { threshold: 0.1 });
-
-        observer.observe(container);
-
-        // Handle resize
-        window.addEventListener('resize', () => {
-            // Basic resize handling
-            render.canvas.width = container.clientWidth;
-            render.canvas.height = container.clientHeight;
-            Matter.Body.setPosition(ground, { x: container.clientWidth / 2, y: container.clientHeight + 32 });
-            Matter.Body.setPosition(wallRight, { x: container.clientWidth + 30, y: container.clientHeight / 2 });
-        });
-    }
+    // Handle resize
+    window.addEventListener("resize", () => {
+      // Basic resize handling
+      render.canvas.width = container.clientWidth;
+      render.canvas.height = container.clientHeight;
+      Matter.Body.setPosition(ground, {
+        x: container.clientWidth / 2,
+        y: container.clientHeight + 32,
+      });
+      Matter.Body.setPosition(wallRight, {
+        x: container.clientWidth + 30,
+        y: container.clientHeight / 2,
+      });
+    });
+  }
 }
 
-customElements.define('site-footer', SiteFooter);
+customElements.define("site-footer", SiteFooter);

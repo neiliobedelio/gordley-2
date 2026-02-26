@@ -1,0 +1,62 @@
+/* =========================================
+   Global Design Tokens
+   ========================================= */
+
+:root {
+  /* Core Colors */
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --accent-color: #9eaa83;
+  --placeholder-color: #cccccc;
+  
+  /* Background Shades */
+  --dark-bg: #111111;
+  --light-bg: #f9f9f9;
+  --hero-bg: #f4f4f4;
+  
+  /* Text & Gray Shades */
+  --gray-text: #666666;
+  --light-gray: #888888;
+  --dark-gray: #333333;
+  
+  /* Component Colors */
+  --footer-bg: #1b1b1b;
+  --footer-text: #ffffff;
+  --border-color: rgba(255, 255, 255, 0.2);
+  
+  /* Overlays & Effects */
+  --overlay-bg: rgba(0, 0, 0, 0.5);
+  --particle-color: rgba(0, 0, 0, 0.5);
+  --particle-line-color: rgba(0, 0, 0, 0.15);
+
+  /* Fonts Definitions */
+  --font-sans: "Inter", Helvetica, Arial, sans-serif;
+  --font-serif: "Libre Baskerville", Georgia, serif;
+
+  /* Active Font Settings */
+  --font-body: var(--font-sans);
+  --font-heading: var(--font-sans);
+
+  /* Spacing & Layout */
+  --spacing-section: 100px;
+  --container-width: 1200px;
+  --card-radius: 6px;
+  
+  /* Marketing Specific Colors (can be overridden locally) */
+  --savanna-bg: #e9bf8b;
+  --beach-bg: #e7dfcf;
+  --glacier-bg: #b6d6c8;
+  --coral-bg: #e86357;
+}
+
+/* Dark Theme Overrides */
+[data-theme="dark"] {
+  --bg-color: #111111;
+  --text-color: #ffffff;
+  --light-bg: #222222;
+  --hero-bg: #222222;
+  --footer-bg: #ffffff;
+  --footer-text: #1b1b1b;
+  --particle-color: rgba(255, 255, 255, 0.5);
+  --particle-line-color: rgba(255, 255, 255, 0.15);
+}

@@ -1,0 +1,226 @@
+/* =========================================
+   Listing Components
+   ========================================= */
+
+.work-list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+    gap: clamp(20px, 4vw, 60px);
+    padding: 0 0 clamp(40px, 8vw, 60px) 0;
+}
+
+.work-list-tile {
+    display: flex;
+    align-items: center;
+    gap: clamp(16px, 3vw, 24px);
+    text-decoration: none;
+    color: var(--text-color);
+    padding: clamp(20px, 4vw, 35px) 0;
+    border-top: 1px solid var(--border-color, #d2d2d7);
+}
+
+[data-theme="dark"] .work-list-tile {
+    border-top-color: #424245;
+}
+
+.work-list-tile:nth-child(1),
+.work-list-tile:nth-child(2) {
+    border-top: none;
+}
+
+.work-list-tile:hover h3 {
+    text-decoration: underline;
+}
+
+.work-tile-img {
+    width: clamp(100px, 15vw, 140px);
+    height: clamp(100px, 15vw, 140px);
+    flex-shrink: 0;
+    border-radius: clamp(16px, 2vw, 20px);
+    background-size: cover;
+    background-position: center;
+    background-color: var(--hero-bg);
+}
+
+.work-tile-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.work-category {
+    font-size: clamp(10px, 1.5vw, 11px);
+    font-weight: 700;
+    color: #86868b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.work-tile-content h3 {
+    font-size: clamp(18px, 2.5vw, 21px);
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+}
+
+.work-date {
+    font-size: clamp(12px, 1.5vw, 13px);
+    font-weight: 600;
+    color: #86868b;
+}
+
+/* Base Work Item (Grid) - Using clamp for dynamic sizing */
+.work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: clamp(10px, 2vw, 20px);
+}
+
+.work-item {
+    position: relative;
+    aspect-ratio: 16/9;
+    background-color: var(--placeholder-color);
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: var(--card-radius, 0);
+}
+
+.work-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.work-item:hover .work-overlay {
+    opacity: 1;
+}
+
+.work-overlay h4 {
+    font-size: clamp(18px, 3vw, 24px);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.work-item:hover .work-overlay h4 {
+    transform: translateY(0);
+}
+
+/* Projects Grid Page - Consolidating breakpoints */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+    width: 100%;
+}
+
+.project-tile {
+    position: relative;
+    display: flex;
+    /* Changed from block to utilize flex for content */
+    width: 100%;
+    height: clamp(50vh, 60vh, 600px);
+    overflow: hidden;
+    color: white;
+    text-decoration: none;
+}
+
+.project-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s ease;
+    z-index: 1;
+}
+
+.project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2));
+    z-index: 2;
+    transition: background-color 0.3s ease;
+}
+
+.project-content {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: clamp(2rem, 5vw, 4rem);
+}
+
+.project-category {
+    font-family: var(--font-heading);
+    font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.project-tile h3 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+    font-family: var(--font-heading);
+}
+
+.project-tile p {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    font-family: var(--font-body);
+}
+
+.project-bar {
+    width: 0%;
+    height: 4px;
+    background-color: var(--accent-color);
+    margin-bottom: 1.5rem;
+    transition: width 0.4s ease;
+}
+
+.project-arrow {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.4s ease;
+    color: white;
+}
+
+/* Hover Effects */
+.project-tile:hover .project-bg {
+    transform: scale(1.05);
+}
+
+.project-tile:hover h3 {
+    color: var(--accent-color);
+}
+
+.project-tile:hover .project-bar {
+    width: 100%;
+}
+
+.project-tile:hover .project-arrow {
+    transform: translateX(10px);
+    color: var(--accent-color);
+}

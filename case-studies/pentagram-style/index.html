@@ -1,107 +1,146 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manny Pacquiao Foundation - Pentagram Style</title>
 
     <!-- Meta Tags Cloned from Pentagram -->
-    <meta property="og:title" content="Manny Pacquiao Foundation">
-    <meta name="description" content="A brand identity for the Manny Pacquiao Foundation.">
-    <meta property="og:description" content="A brand identity for the Manny Pacquiao Foundation.">
-    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:title" content="Manny Pacquiao Foundation" />
+    <meta
+      name="description"
+      content="A brand identity for the Manny Pacquiao Foundation."
+    />
+    <meta
+      property="og:description"
+      content="A brand identity for the Manny Pacquiao Foundation."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Styles -->
-    <link rel="stylesheet" href="../../css/style.css"> <!-- Base styles for footer -->
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="stylesheet" href="../../css/variables.css" />
+  <link rel="stylesheet" href="../../css/components/typography.css" />
+  <link rel="stylesheet" href="../../css/components/buttons.css" />
+  <link rel="stylesheet" href="../../css/components/cards.css" />
+  <link rel="stylesheet" href="../../css/components/listings.css" />
+  <link rel="stylesheet" href="../../css/style.css" />
+    <!-- Base styles for footer -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
-
+  <body>
     <!-- Header / Nav -->
     <site-header></site-header>
 
     <!-- Project Title Section -->
     <section class="project-title-section">
-        <div class="project-details">
-            <h1>Pentagram Style</h1>
-            <div class="project-categories">
-                <span>Non-profit</span>
-                <span class="separator">/</span>
-                <span>Branding</span>
-            </div>
+      <div class="project-details">
+        <h1>Pentagram Style</h1>
+        <div class="project-categories">
+          <span>Non-profit</span>
+          <span class="separator">/</span>
+          <span>Branding</span>
         </div>
+      </div>
     </section>
 
     <!-- Fixed "About" Toggle -->
-    <button class="about-toggle-fixed" id="about-toggle" aria-expanded="false" aria-controls="project-info">
-        <span class="icon">+</span>
-        <span class="label">About the project</span>
+    <button
+      class="about-toggle-fixed"
+      id="about-toggle"
+      aria-expanded="false"
+      aria-controls="project-info"
+    >
+      <span class="icon">+</span>
+      <span class="label">About the project</span>
     </button>
 
     <!-- Main Content Wrapper -->
     <main class="project-main" id="project-main">
+      <!-- Media Grid (Left Column) -->
+      <section class="project-media">
+        <!-- Hero Video/Image -->
+        <div class="media-item full-width">
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            poster="../../assets/pentagram-style/hero.jpg"
+          >
+            <source src="../../assets/your-video-file.mp4" type="video/mp4" />
+          </video>
+        </div>
 
-        <!-- Media Grid (Left Column) -->
-        <section class="project-media">
-            <!-- Hero Video/Image -->
-            <div class="media-item full-width">
-                <video autoplay muted loop playsinline poster="../../assets/pentagram-style/hero.jpg">
-                    <source src="../../assets/your-video-file.mp4" type="video/mp4">
-                </video>
-            </div>
+        <div class="media-row">
+          <!-- Content Images from Manny Project -->
+          <div class="media-item">
+            <img
+              src="../../assets/pentagram-style/gloves.jpg"
+              alt="Boxing Gloves Detail"
+            />
+          </div>
 
-            <div class="media-row">
-                <!-- Content Images from Manny Project -->
-                <div class="media-item">
-                    <img src="../../assets/pentagram-style/gloves.jpg" alt="Boxing Gloves Detail">
-                </div>
+          <div class="media-item">
+            <img
+              src="../../assets/pentagram-style/action.jpg"
+              alt="Boxing Action Shot"
+            />
+          </div>
+        </div>
 
-                <div class="media-item">
-                    <img src="../../assets/pentagram-style/action.jpg" alt="Boxing Action Shot">
-                </div>
-            </div>
+        <div class="quote-block-large">
+          <p>
+            “We believe in hard work, having fun, and creating work that
+            matters.”
+          </p>
+        </div>
 
-            <div class="quote-block-large">
-                <p>“We believe in hard work, having fun, and creating work that matters.”</p>
-            </div>
+        <div class="media-item full-width">
+          <img
+            src="../../assets/pentagram-style/philanthropy.jpg"
+            alt="Philanthropy and Community"
+          />
+        </div>
+      </section>
 
-            <div class="media-item full-width">
-                <img src="../../assets/pentagram-style/philanthropy.jpg" alt="Philanthropy and Community">
-            </div>
-        </section>
+      <!-- Project Info (Right Column - Hidden/Sticky) -->
+      <aside class="project-info" id="project-info" aria-hidden="true">
+        <div class="info-content-sticky">
+          <div class="info-section">
+            <h3>The Story</h3>
+            <p>
+              To kick off the Town of Oro Valley (OV) General Plan Update, the
+              Town tasked Gordley Group with creating a brand that represented
+              the Town's values and overall purpose and invited the OV community
+              to engage and participate in the initiative.
+            </p>
+          </div>
 
-        <!-- Project Info (Right Column - Hidden/Sticky) -->
-        <aside class="project-info" id="project-info" aria-hidden="true">
-            <div class="info-content-sticky">
-                <div class="info-section">
-                    <h3>The Story</h3>
-                    <p>To kick off the Town of Oro Valley (OV) General Plan Update, the Town tasked Gordley Group with
-                        creating a brand that represented the Town's values and overall purpose and invited the OV
-                        community to engage and participate in the initiative.</p>
-                </div>
+          <div class="info-section">
+            <h3>Project Team</h3>
+            <ul class="credits-list">
+              <li><strong>Client</strong> Manny Pacquiao Foundation</li>
+              <li><strong>Agency</strong> Gordley Group</li>
+              <li><strong>Services</strong> Branding, Web Design, Strategy</li>
+            </ul>
+          </div>
 
-                <div class="info-section">
-                    <h3>Project Team</h3>
-                    <ul class="credits-list">
-                        <li><strong>Client</strong> Manny Pacquiao Foundation</li>
-                        <li><strong>Agency</strong> Gordley Group</li>
-                        <li><strong>Services</strong> Branding, Web Design, Strategy</li>
-                    </ul>
-                </div>
-
-                <div class="info-section">
-                    <h3>Impact</h3>
-                    <p>Donations AND the number of donors MORE THAN DOUBLED THE MONTHLY AVERAGE compared to the seven
-                        months before.</p>
-                </div>
-            </div>
-        </aside>
-
+          <div class="info-section">
+            <h3>Impact</h3>
+            <p>
+              Donations AND the number of donors MORE THAN DOUBLED THE MONTHLY
+              AVERAGE compared to the seven months before.
+            </p>
+          </div>
+        </div>
+      </aside>
     </main>
 
     <!-- Footer -->
@@ -112,6 +151,5 @@
     <script src="../../js/header-component.js"></script>
     <script src="../../js/main.js"></script>
     <script src="script.js"></script>
-</body>
-
+  </body>
 </html>

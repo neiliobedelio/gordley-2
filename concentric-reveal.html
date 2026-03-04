@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concentric Ellipse Reveal Hero | Gordley</title>
+
+    <!-- Using the site's base styles -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            /* Force pitch black to hide subpixel tearing */
+            color: #fff;
+            overflow-x: hidden;
+            font-family: var(--font-primary, sans-serif);
+        }
+
+        .hero-section {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            overflow: hidden;
+            padding: 0 10vw;
+            /* Add padding to bring content off the direct edge */
+            box-sizing: border-box;
+        }
+
+        .hero-background-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: left;
+            opacity: 0;
+            /* Will fade in *after* or *during* reveal */
+            animation: fadeInText 1s ease 2s forwards;
+            pointer-events: none;
+            /* Let clicks pass through if needed */
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            margin: 0 0 1rem 0;
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .hero-content p {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            margin: 0;
+            font-family: var(--font-secondary, sans-serif);
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        /* SVG Mask Animation Properties */
+        .reveal-circle {
+            fill: none;
+            stroke: white;
+            stroke-width: 0;
+            /* 1.5 second duration as requested */
+            animation: expandStroke 1.5s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+        }
+
+        .ring-image {
+            transform-origin: 100% 50%;
+            /* Center of the rotation pivot fits the right edge */
+            animation: twistImage 1.5s cubic-bezier(0.645, 0.045, 0.355, 1) both;
+        }
+
+        @keyframes expandStroke {
+            0% {
+                stroke-width: 0%;
+            }
+
+            100% {
+                /* Dynamically hits the perfect thickness without excessive overlapping */
+                stroke-width: var(--target-thickness);
+            }
+        }
+
+        @keyframes twistImage {
+            0% {
+                transform: scale(1.15) rotate(5deg);
+            }
+
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes fadeInText {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Nav barebones for context */
+        .site-nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 24px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .site-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="site-nav">
+        <a href="index.html">Gordley</a>
+        <a href="#">Menu</a>
+    </nav>
+
+    <section class="hero-section">
+        <!-- SVG used as the masked image background -->
+        <svg class="hero-background-svg" id="hero-svg-container" xmlns="http://www.w3.org/2000/svg">
+            <defs id="svg-defs">
+            </defs>
+        </svg>
+
+        <div class="hero-content">
+            <h1>Reveal Impact</h1>
+            <p>20-30 Concentric Circles</p>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const svgContainer = document.getElementById('hero-svg-container');
+            const defs = document.getElementById('svg-defs');
+            const numCircles = 30; // Between 20-30 tightly aligned masks
+
+            // The maximum radius needed to cover the screen from center-right to top-left is roughly 150vw. 
+            const ringThickness = 150 / numCircles;
+
+            for (let i = 0; i < numCircles; i++) {
+                // 1. Create unique mask
+                const maskId = `circle-mask-${i}`;
+                const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
+                mask.setAttribute('id', maskId);
+
+                // 2. Create the circle for this mask 
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+
+                // Center the circles on the right edge
+                circle.setAttribute('cx', '100%');
+                circle.setAttribute('cy', '50%');
+
+                // The radius establishes the exact center point of the stroke for this ring.
+                // Because stroke draws outwards in both directions from the radius line, we increment safely.
+                const r = (i + 0.5) * ringThickness;
+                circle.setAttribute('r', `${r}%`);
+                circle.setAttribute('class', 'reveal-circle');
+
+                // Pass the precise stroke-width to perfectly touch the adjacent rings without overshooting
+                // Adding an aggressive 1.5% thickness overlap completely nullifies sub-pixel rendering gaps
+                circle.style.setProperty('--target-thickness', `${ringThickness + 1.5}%`);
+
+                // Stagger the start time. 
+                const delay = i * 0.045; // Delay for ripple reveal
+                circle.style.animationDelay = `${delay}s`;
+
+                mask.appendChild(circle);
+                defs.appendChild(mask);
+
+                // 3. Create the image slice and apply the mask
+                const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+                image.setAttribute('href', 'assets/kirstenmarie-tjFQ_G_zQpU-unsplash.jpg');
+                image.setAttribute('width', '100%');
+                image.setAttribute('height', '100%');
+                image.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+                image.setAttribute('mask', `url(#${maskId})`);
+                image.setAttribute('class', 'ring-image');
+
+                // Staggering the exact same rotation timeline on the image slice itself
+                image.style.animationDelay = `${delay}s`;
+
+                svgContainer.appendChild(image);
+            }
+        });
+    </script>
+</body>
+
+</html>

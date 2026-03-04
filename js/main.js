@@ -25,20 +25,24 @@ document.addEventListener("DOMContentLoaded", () => {
   if (typeof $ !== "undefined" && $.fn.ripples) {
     $(".ripple-hero").ripples({
       resolution: 512,
-      dropRadius: 20, // size of the ripple
-      perturbance: 0.04, // amount of refraction/water effect
+      dropRadius: 50, // Much larger ripple size
+      perturbance: 0.15, // High refraction/amplitude for extreme warping
       interactive: true,
     });
 
-    // Optionally trigger a splash to indicate it's interactive
-    setTimeout(() => {
+    // Continuously drop large ripples to create constant motion
+    setInterval(() => {
       const $el = $(".ripple-hero");
       if ($el.length) {
-        const x = $el.width() / 2;
-        const y = $el.height() / 2;
-        $el.ripples("drop", x, y, 30, 0.05);
+        // Random position across the hero
+        const x = Math.random() * $el.width();
+        const y = Math.random() * $el.height();
+        // Varying sizes and strengths
+        const radius = 40 + Math.random() * 60;
+        const strength = 0.1 + Math.random() * 0.1;
+        $el.ripples("drop", x, y, radius, strength);
       }
-    }, 1000);
+    }, 1500); // Drop a new ripple every 1.5 seconds
   }
 });
 
@@ -49,15 +53,19 @@ const watchReelBtn = document.getElementById("watch-reel-btn");
 const videoModal = document.getElementById("video-modal");
 const closeModalBtn = document.getElementById("close-modal");
 
-watchReelBtn.addEventListener("click", () => {
-  videoModal.classList.add("active");
-  document.body.style.overflow = "hidden"; // Prevent scrolling
-});
+if (watchReelBtn) {
+  watchReelBtn.addEventListener("click", () => {
+    videoModal.classList.add("active");
+    document.body.style.overflow = "hidden"; // Prevent scrolling
+  });
+}
 
-closeModalBtn.addEventListener("click", () => {
-  videoModal.classList.remove("active");
-  document.body.style.overflow = ""; // Restore scrolling
-});
+if (closeModalBtn) {
+  closeModalBtn.addEventListener("click", () => {
+    videoModal.classList.remove("active");
+    document.body.style.overflow = ""; // Restore scrolling
+  });
+}
 
 // Close modal when clicking outside content
 videoModal.addEventListener("click", (e) => {

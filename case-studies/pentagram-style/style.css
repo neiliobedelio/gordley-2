@@ -126,7 +126,7 @@ body {
 .project-info {
   width: 0;
   opacity: 0;
-  overflow: hidden;
+  clip-path: inset(0);
   background-color: var(--bg-color);
   transition:
     width 0.5s ease,

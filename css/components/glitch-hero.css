@@ -1,0 +1,68 @@
+/* =========================================
+   Glitch Hero Component (for index-glitch.html)
+   ========================================= */
+
+.glitch-hero-overlay {
+    text-align: center;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, transparent 20%),
+        linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 100%);
+    z-index: 2;
+    position: relative;
+    pointer-events: none;
+}
+
+.glitch-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+}
+
+/* Base typographic styling */
+.glitch-group h1.featured-text {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(80px, 15vw, 200px);
+    line-height: 1;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    text-transform: uppercase;
+    display: block;
+    pointer-events: auto;
+}
+
+.glitch-group h2.featured-sub {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(20px, 4vw, 50px);
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: .5em;
+    margin-top: 10px;
+    pointer-events: auto;
+}
+
+/* Splitting.js specific classes */
+.glitch-group .splitting .char {
+    display: inline-block;
+    position: relative;
+    height: 1em;
+}
+
+/* Important: Hide splitting defaults that break our custom HTML odometer column */
+.glitch-group .splitting .char::before,
+.glitch-group .splitting .char::after {
+    display: none !important;
+}

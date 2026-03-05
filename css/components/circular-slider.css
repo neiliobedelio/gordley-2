@@ -1,0 +1,251 @@
+/* Circular Slider Section */
+.circular-slider-section {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Background Slide Container */
+.slider-bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.slider-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: opacity, transform;
+}
+
+.slider-bg-image.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.slider-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Progress & Indicators */
+.slider-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+    width: 100%;
+    max-width: 400px;
+    /* Keep it shorter than full width for elegance */
+}
+
+.slider-content.active .slider-meta {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.slider-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.slider-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.slider-dot:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.slider-dot.active {
+    background: #fff;
+    transform: scale(1.5);
+}
+
+.slider-progress {
+    flex-grow: 1;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.slider-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: #fff;
+    transition: width linear;
+}
+
+/* Text Content Area */
+.slider-content {
+    position: relative;
+    z-index: 3;
+    max-width: 600px;
+    margin-left: max(10%, 4rem);
+    padding: 2rem 0;
+}
+
+.slider-title {
+    font-size: clamp(3rem, 6vw, 6rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+}
+
+.slider-desc {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 480px;
+}
+
+.slider-content.active .slider-title,
+.slider-content.active .slider-desc {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Rotating Circle Navigation */
+.circle-nav-container {
+    position: absolute;
+    right: -50vh;
+    top: 50%;
+    width: 100vh;
+    height: 100vh;
+    transform: translateY(-50%);
+    z-index: 4;
+    pointer-events: none;
+    /* Let clicks pass through except on items */
+}
+
+/* The actual ring that rotates */
+.circle-nav-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: transform 1.2s cubic-bezier(0.25, 1, 0.25, 1);
+    will-change: transform;
+}
+
+.circle-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 64px;
+    height: 64px;
+    margin-top: -32px;
+    margin-left: -32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    pointer-events: auto;
+
+    /* Will counter-rotate inline with JS */
+    transition: background 0.4s ease, color 0.4s ease, transform 1.2s cubic-bezier(0.25, 1, 0.25, 1), box-shadow 0.4s ease;
+    will-change: transform;
+}
+
+.circle-item:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+    /* The JS transform might conflict here, but we will wrap inner content if needed */
+}
+
+/* To avoid hover scaling conflicting with JS transform, apply inner scale */
+.circle-item-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.circle-item:hover .circle-item-inner {
+    transform: scale(1.15);
+}
+
+.circle-item.active {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+    border-color: #fff;
+}
+
+/* Responsiveness for Circular Nav */
+@media (max-width: 900px) {
+    .circle-nav-container {
+        width: 60vh;
+        height: 60vh;
+        right: -30vh;
+    }
+}
+
+@media (max-width: 600px) {
+
+    /* Hide rotating circle on very small screens or make it horizontal dots */
+    .circle-nav-container {
+        display: none;
+    }
+
+    /* Alternative fallback navigation for mobile could go here */
+}

@@ -43,9 +43,25 @@ p {
 }
 
 .highlight {
-    color: var(--accent-color);
-    position: relative;
-    display: inline-block;
+    color: inherit;
+    background-image: linear-gradient(#1086cc, #1086cc);
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    background-position: left center;
+    /* Increase duration to 1s and delay to 0.8s */
+    transition: background-size 1s cubic-bezier(0.25, 1, 0.5, 1) 0.8s, color 0.3s ease 0.9s;
+    padding: 0 4px;
+    margin: 0 -4px;
+    border-radius: 2px;
+}
+
+.aos-animate .highlight,
+.highlight.aos-animate,
+.is-visible .highlight,
+.highlight.is-visible,
+.active .highlight {
+    background-size: 100% 100%;
+    color: #ffffff;
 }
 
 .swoosh-placeholder {

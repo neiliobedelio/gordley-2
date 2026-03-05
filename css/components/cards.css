@@ -111,24 +111,3 @@
     transition: transform 0.3s ease;
     user-select: none;
 }
-
-/* Team Member Card */
-.team-member {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.member-image-wrapper {
-    width: 100%;
-    aspect-ratio: 3/4;
-    background-color: var(--placeholder-color);
-    position: relative;
-    transition: transform 0.3s ease;
-    overflow: hidden;
-    border-radius: var(--card-radius);
-}
-
-.team-member:hover .member-image-wrapper {
-    transform: scale(1.02);
-}

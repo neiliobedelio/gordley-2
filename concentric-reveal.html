@@ -9,6 +9,7 @@
     <!-- Using the site's base styles -->
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components/glass-chat.css">
 
     <style>
         body,
@@ -48,11 +49,11 @@
 
         .hero-content {
             position: relative;
-            z-index: 2;
+            z-index: 100;
             text-align: left;
             opacity: 0;
-            /* Will fade in *after* or *during* reveal */
-            animation: fadeInText 1s ease 2s forwards;
+            /* Fade in just a bit earlier so the user sees it mapping with the reveal */
+            animation: fadeInText 1s ease 1s forwards;
             pointer-events: none;
             /* Let clicks pass through if needed */
         }
@@ -74,39 +75,68 @@
             opacity: 0.9;
         }
 
-        /* SVG Mask Animation Properties */
-        .reveal-circle {
-            fill: none;
-            stroke: white;
-            stroke-width: 0;
-            /* 1.5 second duration as requested */
-            animation: expandStroke 1.5s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+        /* Hardware Accelerated CSS Ring Ripple Properties */
+        .hero-background-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+            background-color: #000;
         }
 
-        .ring-image {
+        .ring-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Solid black blocks the layers underneath from polluting opacity blends */
+            background-color: #000;
+            /* clip-path explicitly set via JS */
+        }
+
+        .ring-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/kirstenmarie-tjFQ_G_zQpU-unsplash.jpg');
+            background-size: cover;
+            background-position: center;
+            /* Center of the twist pivot fits the right edge */
             transform-origin: 100% 50%;
-            /* Center of the rotation pivot fits the right edge */
+            /* Fades in and twists concurrently per-ring asynchronously */
             animation: twistImage 1.5s cubic-bezier(0.645, 0.045, 0.355, 1) both;
-        }
-
-        @keyframes expandStroke {
-            0% {
-                stroke-width: 0%;
-            }
-
-            100% {
-                /* Dynamically hits the perfect thickness without excessive overlapping */
-                stroke-width: var(--target-thickness);
-            }
         }
 
         @keyframes twistImage {
             0% {
+                opacity: 0;
                 transform: scale(1.15) rotate(5deg);
             }
 
+            15% {
+                /* Aggressive fade in avoids stuttering/transparency buildup */
+                opacity: 1;
+            }
+
             100% {
+                opacity: 1;
                 transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes fadeOutImage {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
             }
         }
 
@@ -154,11 +184,9 @@
     </nav>
 
     <section class="hero-section">
-        <!-- SVG used as the masked image background -->
-        <svg class="hero-background-svg" id="hero-svg-container" xmlns="http://www.w3.org/2000/svg">
-            <defs id="svg-defs">
-            </defs>
-        </svg>
+        <!-- DOM-based perfectly stacking image rings -->
+        <div class="hero-background-container" id="hero-bg-container">
+        </div>
 
         <div class="hero-content">
             <h1>Reveal Impact</h1>
@@ -168,57 +196,178 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const svgContainer = document.getElementById('hero-svg-container');
-            const defs = document.getElementById('svg-defs');
-            const numCircles = 30; // Between 20-30 tightly aligned masks
+            const container = document.getElementById('hero-bg-container');
+            const numCircles = 30; // 30 Rings
+            const maxRadius = 150; // The maximum radius (150vw) covering the screen bounds completely
 
-            // The maximum radius needed to cover the screen from center-right to top-left is roughly 150vw. 
-            const ringThickness = 150 / numCircles;
+            // List of images to cycle through
+            const images = [
+                'assets/kirstenmarie-tjFQ_G_zQpU-unsplash.jpg',
+                'assets/about.jpg', // Another hero image from the site
+                'assets/staff-3.jpg' // Work section image
+            ];
 
-            for (let i = 0; i < numCircles; i++) {
-                // 1. Create unique mask
-                const maskId = `circle-mask-${i}`;
-                const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
-                mask.setAttribute('id', maskId);
+            // Preload images to avoid flash of white when swapping
+            images.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
 
-                // 2. Create the circle for this mask 
-                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            let currentImageIndex = 0;
+            let ringsInitialized = false;
+            let ringBgs = [];
 
-                // Center the circles on the right edge
-                circle.setAttribute('cx', '100%');
-                circle.setAttribute('cy', '50%');
+            function triggerReveal() {
+                const currentImgSrc = images[currentImageIndex];
 
-                // The radius establishes the exact center point of the stroke for this ring.
-                // Because stroke draws outwards in both directions from the radius line, we increment safely.
-                const r = (i + 0.5) * ringThickness;
-                circle.setAttribute('r', `${r}%`);
-                circle.setAttribute('class', 'reveal-circle');
+                if (!ringsInitialized) {
+                    for (let i = 0; i < numCircles; i++) {
+                        const ringContainer = document.createElement('div');
+                        ringContainer.className = 'ring-container';
 
-                // Pass the precise stroke-width to perfectly touch the adjacent rings without overshooting
-                // Adding an aggressive 1.5% thickness overlap completely nullifies sub-pixel rendering gaps
-                circle.style.setProperty('--target-thickness', `${ringThickness + 1.5}%`);
+                        const radius = (i + 1) * (maxRadius / numCircles);
+                        ringContainer.style.clipPath = `circle(${radius}vw at 100% 50%)`;
+                        ringContainer.style.zIndex = numCircles - i;
 
-                // Stagger the start time. 
-                const delay = i * 0.045; // Delay for ripple reveal
-                circle.style.animationDelay = `${delay}s`;
+                        const ringBg = document.createElement('div');
+                        ringBg.className = 'ring-bg';
+                        ringBgs.push(ringBg);
+                        ringContainer.appendChild(ringBg);
+                        container.appendChild(ringContainer);
+                    }
+                    ringsInitialized = true;
+                }
 
-                mask.appendChild(circle);
-                defs.appendChild(mask);
+                // Reset and restart animation on reused elements
+                ringBgs.forEach((bg, i) => {
+                    bg.style.animation = 'none';
+                    // Force reflow
+                    void bg.offsetWidth;
 
-                // 3. Create the image slice and apply the mask
-                const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-                image.setAttribute('href', 'assets/kirstenmarie-tjFQ_G_zQpU-unsplash.jpg');
-                image.setAttribute('width', '100%');
-                image.setAttribute('height', '100%');
-                image.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-                image.setAttribute('mask', `url(#${maskId})`);
-                image.setAttribute('class', 'ring-image');
+                    bg.style.backgroundImage = `url('${currentImgSrc}')`;
+                    const delay = i * 0.045;
+                    bg.style.animation = `twistImage 1.5s cubic-bezier(0.645, 0.045, 0.355, 1) ${delay}s both`;
+                });
 
-                // Staggering the exact same rotation timeline on the image slice itself
-                image.style.animationDelay = `${delay}s`;
+                // Prepare for next image
+                currentImageIndex = (currentImageIndex + 1) % images.length;
 
-                svgContainer.appendChild(image);
+                // Schedule fade out slightly before the next reveal so it transitions smoothly
+                setTimeout(() => {
+                    ringBgs.forEach(bg => {
+                        bg.style.animation = 'fadeOutImage 0.8s ease forwards';
+                    });
+
+                    // Trigger new reveal in 1 second, right after fade out completes
+                    setTimeout(triggerReveal, 1000);
+                }, 9000); // Wait 9 seconds of the 10 second cycle before fading
             }
+
+            // Start the first cycle
+            triggerReveal();
+        });
+    </script>
+    <!-- Glassmorphic Chat Widget -->
+    <div class="chat-fab" id="chat-fab" aria-label="Open Chat">
+        <!-- Message Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="message-icon">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <!-- Close Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="close-icon" fill="none"
+            stroke="currentColor">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+    </div>
+
+    <div class="chat-widget" id="chat-widget">
+        <div class="chat-header">
+            <div class="chat-avatar">AI</div>
+            <div class="chat-title-container">
+                <h3 class="chat-title">Gordley Assistant</h3>
+                <span class="chat-status">Online and ready to help</span>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+            <div class="message received">
+                Hi there! Welcome to Gordley. How can I help you explore our work today?
+            </div>
+            <!-- Messages will be added here -->
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type a message..." autocomplete="off">
+            <button class="chat-submit" id="chat-submit" aria-label="Send Message">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Chat Widget Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatFab = document.getElementById('chat-fab');
+            const chatWidget = document.getElementById('chat-widget');
+            const chatInput = document.getElementById('chat-input');
+            const chatSubmit = document.getElementById('chat-submit');
+            const chatMessages = document.getElementById('chat-messages');
+
+            // Toggle Chat window
+            chatFab.addEventListener('click', () => {
+                chatFab.classList.toggle('active');
+                chatWidget.classList.toggle('active');
+
+                if (chatWidget.classList.contains('active')) {
+                    chatInput.focus();
+                }
+            });
+
+            // Handle sending messages
+            function sendMessage() {
+                const text = chatInput.value.trim();
+                if (!text) return;
+
+                // Add user message
+                appendMessage(text, 'sent');
+                chatInput.value = '';
+
+                // Simulate typing delay before response
+                setTimeout(() => {
+                    const responses = [
+                        "That's a great question about our capabilities! Let me find the right case study for you.",
+                        "I can certainly help you get in touch with our team about that project.",
+                        "Our approach combines strategic thinking with beautiful design.",
+                        "Would you like me to show you some similar work we've done in that industry?"
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    appendMessage(randomResponse, 'received');
+                }, 1000 + Math.random() * 1500);
+            }
+
+            function appendMessage(text, type) {
+                const message = document.createElement('div');
+                message.className = `message ${type}`;
+                message.textContent = text;
+
+                chatMessages.appendChild(message);
+
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Event Listeners for sending
+            chatSubmit.addEventListener('click', sendMessage);
+
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
         });
     </script>
 </body>

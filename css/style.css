@@ -378,9 +378,25 @@ button {
 }
 
 .highlight {
-  color: var(--accent-color);
-  position: relative;
-  display: inline-block;
+  color: inherit;
+  background-image: linear-gradient(#1086cc, #1086cc);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: left center;
+  /* Increase duration to 1s and delay to 0.8s */
+  transition: background-size 1s cubic-bezier(0.25, 1, 0.5, 1) 0.8s, color 0.3s ease 0.9s;
+  padding: 0 4px;
+  margin: 0 -4px;
+  border-radius: 2px;
+}
+
+.aos-animate .highlight,
+.highlight.aos-animate,
+.is-visible .highlight,
+.highlight.is-visible,
+.active .highlight {
+  background-size: 100% 100%;
+  color: #ffffff;
 }
 
 .swoosh-placeholder {
@@ -460,10 +476,20 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to top,
+  background-image: linear-gradient(to top,
       rgba(0, 0, 0, 0.8) 0%,
       rgba(0, 0, 0, 0) 50%);
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   pointer-events: none;
+  transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.accordion-panel.active .panel-overlay {
+  background-color: transparent;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
 }
 
 /* Vertical Title (Inactive State) */
@@ -737,9 +763,25 @@ button {
 }
 
 .highlight {
-  color: var(--accent-color);
-  position: relative;
-  display: inline-block;
+  color: inherit;
+  background-image: linear-gradient(#1086cc, #1086cc);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: left center;
+  /* Increase duration to 1s and delay to 0.8s */
+  transition: background-size 1s cubic-bezier(0.25, 1, 0.5, 1) 0.8s, color 0.3s ease 0.9s;
+  padding: 0 4px;
+  margin: 0 -4px;
+  border-radius: 2px;
+}
+
+.aos-animate .highlight,
+.highlight.aos-animate,
+.is-visible .highlight,
+.highlight.is-visible,
+.active .highlight {
+  background-size: 100% 100%;
+  color: #ffffff;
 }
 
 .swoosh-placeholder {
@@ -2063,44 +2105,46 @@ max-width: 1000px;
 .team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 40px;
+  gap: 0;
 }
 
 .team-member {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 0;
+  background-color: var(--bg-color);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .member-image-placeholder,
 .member-image-wrapper {
   width: 100%;
-  aspect-ratio: 3/4;
-  /* Portrait */
+  aspect-ratio: 1/1;
+  /* Square image as per screenshot */
   background-color: var(--placeholder-color);
   position: relative;
-  /* Needed for absolute positioning */
-  transition: transform 0.3s ease;
   overflow: hidden;
-  /* Ensure image doesn't overflow if scaled */
 }
 
-/* CSS Rollover Styles */
-.mem-img-main,
-.mem-img-hover {
+/* Grayscale effect on default per new design request, image swap kept */
+.mem-img-main {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: opacity 0.3s ease;
-}
-
-.mem-img-main {
+  transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+  filter: grayscale(100%);
   position: relative;
   z-index: 1;
 }
 
 .mem-img-hover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   position: absolute;
   top: 0;
   left: 0;
@@ -2108,26 +2152,67 @@ max-width: 1000px;
   opacity: 0;
 }
 
-.team-member:hover .mem-img-hover {
-  opacity: 1;
+.team-member:hover .mem-img-main {
+  filter: grayscale(0%);
+  transform: scale(1.05);
 }
 
-.team-member:hover .member-image-placeholder,
-.team-member:hover .member-image-wrapper {
-  transform: scale(1.02);
+.team-member:hover .mem-img-hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.member-info {
+  background-color: var(--bg-color);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s ease;
+  min-height: 200px;
+}
+
+.team-member:hover .member-info {
+  background-color: #dca835;
+  /* Yellow as per screenshot */
+}
+
+.member-role {
+  font-size: 13px;
+  color: var(--gray-text);
+  margin-bottom: 12px;
+  font-weight: 400;
+  transition: color 0.3s ease;
+}
+
+.team-member:hover .member-role {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .member-info h4 {
-  font-size: 24px;
-  margin-bottom: 5px;
+  font-size: 26px;
+  margin-bottom: 16px;
   font-weight: 700;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+  letter-spacing: -0.5px;
 }
 
-.member-info p {
-  font-size: 16px;
+.team-member:hover .member-info h4 {
+  color: #ffffff;
+}
+
+.member-bio {
+  font-size: 14px;
+  line-height: 1.6;
   color: var(--gray-text);
-  font-family: var(--font-serif);
-  font-style: italic;
+  font-family: var(--font-body);
+  /* Body font instead of serif italic */
+  font-style: normal;
+  transition: color 0.3s ease;
+}
+
+.team-member:hover .member-info .member-bio {
+  color: #ffffff;
 }
 
 .big-link {
@@ -2149,37 +2234,7 @@ max-width: 1000px;
   }
 }
 
-/* Bio Overlay Styles */
-.bio-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--overlay-bg);
-  /* 0.5 opacity overlay */
-  color: white;
-  /* Reversed out white text */
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  /* 0.25 sec transition */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  text-align: center;
-  z-index: 10;
-}
 
-.bio-overlay p {
-  font-size: 16px;
-  line-height: 1.5;
-  margin: 0;
-}
-
-.team-member:hover .bio-overlay {
-  opacity: 1;
-}
 
 /* =========================================
    Testimonials Slider Section
